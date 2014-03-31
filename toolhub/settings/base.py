@@ -51,12 +51,15 @@ INSTALLED_APPS = (
     'django_jinja',
     'djcelery',
     'mptt',
-
+    'class_based_auth_views',
+    'password_reset',
+    'crispy_forms',
 
     # Database migrations
     'south',
 
     # local applications
+    'accounts',
     'base',
     'tools',  # tool models and views
 
@@ -173,14 +176,19 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
-# django-jinja
+# django_jinja
 DEFAULT_JINJA2_TEMPLATE_EXTENSION = '.jinja'
 JINJA2_AUTOESCAPE = True
 JINJA2_EXTENSIONS = [
-    'compressor.contrib.jinja2ext.CompressorExtension'  # needed to get compressor working
+    'compressor.contrib.jinja2ext.CompressorExtension'  # compressor fix
 ]
 
 
+#crispt_forms
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+
+#debug_toolbar
 def custom_show_toolbar(request):
     """ Only show the debug toolbar to users with the superuser flag. """
     return request.user.is_superuser
