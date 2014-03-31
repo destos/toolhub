@@ -20,12 +20,9 @@
   {% block meta %}
   {% endblock %}
 
-  {# use the CDN to get bootstrap css. can not be inside compress css block #}
-  {% block cdn_css %}
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.2/css/bootstrap.min.css">
-  {% endblock cdn_css %}
-
   {% compress css %}
+  <link rel="stylesheet" href="{{ static('bower/bootstrap/dist/css/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ static('bower/bootstrap/dist/css/bootstrap-theme.css') }}">
   <link rel="stylesheet" href="{{ static('css/app.css') }}">
   {% block css %}{% endblock %}
   {% endcompress %}
@@ -68,13 +65,14 @@
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   {% block cdn_js %}
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
-  <script>window.angular || document.write('<script src="{{ STATIC_URL }}js/libs/angular-1.2.15.min.js"><\/script>')</script>
+  <script>window.angular || document.write('<script src="{{ STATIC_URL }}bower/angular/angular.min.js"><\/script>')</script>
   {# TODO: use UI bootstrap for angular UI elements: http://angular-ui.github.io/bootstrap/ #}
   {% endblock cdn_js %}
 
   <!-- scripts concatenated and minified via django-compressor -->
   {% compress js %}
   {% block js %}
+  <script src="{{ static('bower/angular-bootstrap/ui-bootstrap-tpls.js') }}"></script>
   <script src="{{ static('js/main.js') }}"></script>
   {% endblock js %}
   {% endcompress %}
