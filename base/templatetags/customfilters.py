@@ -1,5 +1,11 @@
 from django.template import Template, Context
+from django.template.defaultfilters import date
+from django.utils import timezone
 import jinja2
+
+
+def now(format_string):
+    return date(timezone.now(), format_string)
 
 
 @jinja2.contextfunction
