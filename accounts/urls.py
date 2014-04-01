@@ -2,6 +2,7 @@ from class_based_auth_views.views import LoginView, LogoutView
 # from django.core.urlresolvers import reverse
 from django.conf.urls import url, patterns
 # from django.views.generic import TemplateView
+from accounts.forms import LoginForm
 
 from accounts import views
 
@@ -12,7 +13,8 @@ urlpatterns = patterns(
     # maybe change these with:
     # https://github.com/django/django/blob/master/django/contrib/auth/forms.py
     url(r'^login/$', LoginView.as_view(
-        template_name='accounts/login.jinja'), name="login"),
+        form_class=LoginForm, template_name='accounts/login.jinja'),
+        name="login"),
     url(r'^logout/$', LogoutView.as_view(), name="logout"),
     url(r'^register/$',
         views.RegistrationView.as_view(), name='register'),
