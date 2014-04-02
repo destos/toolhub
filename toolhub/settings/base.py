@@ -109,6 +109,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_ROOT, 'static'),
 )
 
 # If you set this to False, Django will make some optimizations so as not
@@ -203,6 +204,8 @@ DEBUG_TOOLBAR_CONFIG = {
     'ENABLE_STACKTRACES': True,
 }
 
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
+
 # DEBUG_TOOLBAR_PANELS = (
 #     #'debug_toolbar_user_panel.panels.UserPanel',
 #     'debug_toolbar.panels.version.VersionDebugPanel',
@@ -225,33 +228,17 @@ FILE_UPLOAD_PERMISSIONS = 0o0664
 WSGI_APPLICATION = 'toolhub.wsgi.application'
 
 # Define your database connections
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-        #'OPTIONS': {
-        #    'init_command': 'SET storage_engine=InnoDB',
-        #    'charset' : 'utf8',
-        #    'use_unicode' : True,
-        #},
-        #'TEST_CHARSET': 'utf8',
-        #'TEST_COLLATION': 'utf8_general_ci',
-    },
-    # 'slave': {
-    #     ...
-    # },
-}
+# Parse database configuration from $DATABASE_URL
+import dj_database_url
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config()
 
 # Uncomment this and set to all slave DBs in use on the site.
 # SLAVE_DATABASES = ['slave']
 
 # Recipients of traceback emails and other notifications.
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+    ('Patrick Forringer', 'patrick@forringer.com'),
 )
 MANAGERS = ADMINS
 
@@ -264,9 +251,12 @@ DEBUG = TEMPLATE_DEBUG = False
 # instances and False on stage/prod.
 DEV = False
 
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Hardcoded values can leak through source control.
