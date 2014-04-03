@@ -25,3 +25,4 @@ media/*
 static/*
 staticfiles/*
 base/static/bower*
+.anvil/

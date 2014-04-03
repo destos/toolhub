@@ -31,6 +31,7 @@ PREPEND_WWW = False
 
 # Your project root
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__) + "../../../")
+BASE_DIR = PROJECT_ROOT
 
 SUPPORTED_NONLOCALES = ['media', 'admin', 'static']
 
