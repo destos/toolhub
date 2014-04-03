@@ -109,7 +109,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_ROOT, 'static'),
+    # os.path.join(PROJECT_ROOT, 'static'),
 )
 
 # If you set this to False, Django will make some optimizations so as not
@@ -263,7 +263,7 @@ ALLOWED_HOSTS = ['*']
 # This is an example method of getting the value from an environment setting.
 # Uncomment to use, and then make sure you set the SECRET_KEY environment variable.
 # This is good to use in production, and on services that support it such as Heroku.
-#SECRET_KEY = get_env_setting('SECRET_KEY')
+# SECRET_KEY = get_env_setting('SECRET_KEY')
 
 # Uncomment these to activate and customize Celery:
 # CELERY_ALWAYS_EAGER = False  # required to activate celeryd

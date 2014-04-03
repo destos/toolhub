@@ -1,9 +1,15 @@
 """ Settings for toolhub """
 
 from .base import *
+
 try:
-    from .local import *
+    env = get_env_setting('ENV')
+except ImproperlyConfigured, exc:
+    env = 'local'
+
+try:
+    exec "from .%s import *" % env
 except ImportError, exc:
     exc.args = tuple(
-        ['%s (did you rename settings/local-dist.py?)' % exc.args[0]])
+        ['%s (error importing settings/%s.py)' % exc.args[0], env])
     raise exc
