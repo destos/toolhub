@@ -43,7 +43,6 @@ django-password-reset==0.7
 django-crispy-forms==1.4.0
 
 # heroku requirements
-dj-static==0.0.5
 dj-database-url==0.3.0
 dj-static==0.0.5
 static==1.0.2
