@@ -263,7 +263,7 @@ ALLOWED_HOSTS = ['*']
 # This is an example method of getting the value from an environment setting.
 # Uncomment to use, and then make sure you set the SECRET_KEY environment variable.
 # This is good to use in production, and on services that support it such as Heroku.
-# SECRET_KEY = get_env_setting('SECRET_KEY')
+SECRET_KEY = get_env_setting('SECRET_KEY')
 
 # Uncomment these to activate and customize Celery:
 # CELERY_ALWAYS_EAGER = False  # required to activate celeryd
