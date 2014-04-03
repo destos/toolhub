@@ -1,1 +1,1 @@
-web: gunicorn toolhub.wsgi
+web: waitress-serve --port=$PORT toolhub.wsgi:application

@@ -9,6 +9,7 @@ import logging
 # Normally you should not import ANYTHING from Django directly
 # into your settings, but ImproperlyConfigured is an exception.
 from django.core.exceptions import ImproperlyConfigured
+from django.utils.crypto import get_random_string
 
 
 def get_env_setting(setting):
@@ -19,6 +20,14 @@ def get_env_setting(setting):
         error_msg = "Set the %s env variable" % setting
         raise ImproperlyConfigured(error_msg)
 
+## django-heroku details
+# The name of the app on the Heroku platform.
+HEROKU_APP_NAME = 'toolhub'
+# The optional explicit buildpack URL.
+# HEROKU_BUILDPACK_URL = "https://github.com/destos/toolhub.git"
+# The canonical site domain.
+SITE_DOMAIN = 'toolhub.herokuapp.com'
+PREPEND_WWW = False
 
 # Your project root
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__) + "../../../")
@@ -50,6 +59,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'django_jinja',
     'djcelery',
+    'herokuapp',
     'mptt',
     'class_based_auth_views',
     'password_reset',
@@ -68,8 +78,8 @@ INSTALLED_APPS = (
 # Place bcrypt first in the list, so it will be the default password hashing
 # mechanism
 PASSWORD_HASHERS = (
-    # 'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-    # 'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.SHA1PasswordHasher',
@@ -230,8 +240,9 @@ WSGI_APPLICATION = 'toolhub.wsgi.application'
 # Define your database connections
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config()
+DATABASES = {
+    'default': dj_database_url.config(default='postgres://localhost')
+}
 
 # Uncomment this and set to all slave DBs in use on the site.
 # SLAVE_DATABASES = ['slave']
@@ -263,7 +274,9 @@ ALLOWED_HOSTS = ['*']
 # This is an example method of getting the value from an environment setting.
 # Uncomment to use, and then make sure you set the SECRET_KEY environment variable.
 # This is good to use in production, and on services that support it such as Heroku.
-SECRET_KEY = get_env_setting('SECRET_KEY')
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY", get_random_string(50, (
+        "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)")))
 
 # Uncomment these to activate and customize Celery:
 # CELERY_ALWAYS_EAGER = False  # required to activate celeryd
@@ -281,6 +294,8 @@ INTERNAL_IPS = ('127.0.0.1')
 
 # Set this to true if you use a proxy that sets X-Forwarded-Host
 #USE_X_FORWARDED_HOST = False
+
+## Email settings
 
 SERVER_EMAIL = "webmaster@example.com"
 DEFAULT_FROM_EMAIL = "webmaster@example.com"
