@@ -1,13 +1,6 @@
-/* =============================================================================
-   App specific CSS file.
-
-   This is usually where the site/app's CSS specific rules are setup. Note that you could
-   do exactly the same using less by adding a '@import "app.less";' at the end of
-   css/less/bootstrap.less file.
-
-   ========================================================================== */
+@import url('h5bp.css');
 
 body {
-  padding-top: 50px;
+  padding-top: 60px;
   padding-bottom: 20px;
 }

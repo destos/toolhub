@@ -1,0 +1,22 @@
+{% extends "_layouts/base.jinja" %}
+
+{% macro basic_tool(tool) %}
+{% endmacro %}
+
+{% block content %}
+<div class="col-md-10">
+    <h2>{{user.get_full_name()|default(user.username)}}</h2>
+</div>
+<div class="col-md-2">
+    <ul class="list-group">
+        {% for user_tool in user.tools.all() %}
+        <li class="list-group-item">
+            <a href="{{url('tool-detail', slug=user_tool.tool_type.slug)}}">
+                <h4 class="list-group-item-heading">{{user_tool.callsign|default(user_tool.tool_type.name)}}</h4>
+                <p class="list-group-item-text">{{user_tool.tool_type.description}}<p>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
