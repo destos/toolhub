@@ -3,7 +3,7 @@
 from .base import *
 
 try:
-    env = get_env_setting('ENV')
+    env = get_env_setting('TOOLHUB_ENV')
 except ImproperlyConfigured:
     env = 'local'
 
@@ -15,3 +15,5 @@ except ImportError, exc:
     # exc.args = tuple(
     #     ['%s (error importing settings/%s.py)' % (exc.args[0], env)])
     # raise exc
+finally:
+    print 'using settings/%s.py' % env

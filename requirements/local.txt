@@ -19,3 +19,7 @@ pylint
 
 # if you have issues on mavericks installing pycrypto use:
 # ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future pip install pycrypto
+
+ipython
+ipdb
+Werkzeug==0.9.4
