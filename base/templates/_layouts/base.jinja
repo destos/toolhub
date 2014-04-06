@@ -35,7 +35,7 @@
   <script src="{{ static('js/libs/modernizr-2.6.2-respond-1.1.0.min.js') }}"></script>
   {% endcompress %}
 </head>
-<body class="{% block body_class %}{% endblock %}" {% block body_attributes %}{% endblock %}>
+<body class="{% block body_class %}{% endblock %}" {% block body_attributes %}{% block body_app %} ng-app="toolhubApp"{% endblock %}{% endblock %}>
 {% block body %}
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
@@ -59,8 +59,21 @@
           <li><a href="{{url('tool_list')}}">Tools</a></li>
           <li><a href="{{url('hub_list')}}">Hubs</a></li>
         </ul>
-        <ul class="pull-right nav navbar-nav">
-          <li><a href="{{url('user_hub_list')}}">Your hubs</a></li>
+        <ul class="nav navbar-nav navbar-right">
+          {% if user.is_authenticated() %}
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle">{{ user.username }} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="{{ url('account') }}">Account Preferences</a></li>
+              <li><a href="{{ url('user_hub_list') }}">Your Hubs</a></li>
+              <li class="divider"></li>
+              <li><a href="{{ url('logout') }}">Logout</a></li>
+            </ul>
+          </li>
+          {% else %}
+          <li><a href="{{ url('login') }}">Login</a></li>
+          <li><a href="{{ url('register') }}">Register</a></li>
+          {% endif %}
         </ul>
       </div><!--/.navbar-collapse -->
     </div>
@@ -92,8 +105,9 @@
 
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   {% block cdn_js %}
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
-  <script>window.angular || document.write('<script src="{{ STATIC_URL }}bower/angular/angular.min.js"><\/script>')</script>
+
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular{% if not debug %}.min{% endif %}.js"></script>
+  <script>window.angular || document.write('<script src="{{ STATIC_URL }}bower/angular/angular{% if not debug %}.min{% endif %}.js"><\/script>')</script>
   {# TODO: use UI bootstrap for angular UI elements: http://angular-ui.github.io/bootstrap/ #}
   {% endblock cdn_js %}
 
