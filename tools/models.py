@@ -48,6 +48,13 @@ class ToolClassification(MPTTModel):
         pass
 
 
+class ToolManager(models.Manager):
+
+    # TODO: create published model property
+    def published(self):
+        return self.get_query_set()
+
+
 class Tool(models.Model):
     """
     Describes a specific tool in greater detail
@@ -63,6 +70,8 @@ class Tool(models.Model):
     # TODO: convert these to localized fields
     value = models.FloatField(default=3.50, help_text='monetary value')
     weight = models.FloatField(default=0.0, help_text='weight in grams')
+
+    objects = ToolManager()
 
     def __unicode__(self):
         return self.name

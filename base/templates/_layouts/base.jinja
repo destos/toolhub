@@ -55,6 +55,13 @@
         <a class="navbar-brand" href="/">{{ _("ToolHub") }}</a>
       </div>
       <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="{{url('tool_list')}}">Tools</a></li>
+          <li><a href="{{url('hub_list')}}">Hubs</a></li>
+        </ul>
+        <ul class="pull-right nav navbar-nav">
+          <li><a href="{{url('user_hub_list')}}">Your hubs</a></li>
+        </ul>
       </div><!--/.navbar-collapse -->
     </div>
   </nav>
