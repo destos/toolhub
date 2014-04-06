@@ -1,0 +1,20 @@
+{% extends "hubs/hub_base.jinja" %}
+
+{% from "hubs/macros/users.jinja" import user_list %}
+
+{% block page_title %}{{ hub_user }} @ {{ hub }}{% endblock %}
+
+{% block hub_content %}
+{% if user == hub_user.user %}This is you!{% endif %}
+<ul>
+    <li>Name: {{ hub_user.name }}</li>
+    <li>Email: {{ hub_user.user.email }}</li>
+</ul>
+<ul>
+    <li><a href="{{ url( "hub_user_edit", hub.slug, hub_user.user.username ) }}">Edit</a></li>
+    <li><a href="{{ url( "hub_user_delete", hub.slug, hub_user.user.username ) }}">Delete</a></li>
+</ul>
+{% if not hub_user.user.is_active %}
+<a href="{{ url('hub_user_remind', hub.slug, hub_user.user.username ) }}">Send reminder</a>
+{% endif %}
+{% endblock %}

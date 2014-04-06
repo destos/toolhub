@@ -1,0 +1,5 @@
+{% extends "hubs/hub_list.jinja" %}
+
+{% block breadcrumbs -%}
+    {{ breadcrumbs(hub, hub_user, tail='mine') }}
+{%- endblock %}

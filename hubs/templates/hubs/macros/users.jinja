@@ -1,0 +1,10 @@
+{% macro user_list(hub) %}
+<ul>
+    {% for hub_user in hub.hub_users.all() %}
+    <li>
+	    <a href="{{ hub_user.get_absolute_url() }}">{{ hub_user }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endmacro %}
+

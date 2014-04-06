@@ -1,0 +1,14 @@
+{% macro breadcrumbs(hub=false, hub_user=false, tail=false) %}
+<ol class="breadcrumb">
+    <li><a href="{{ url('hub_list') }}">hubs</a></li>
+    {% if hub %}
+        <li><a href="{{ url('hub_detail', hub.slug) }}">{{hub}}</a></li>
+    {% endif %}
+    {% if hub and hub_user %}
+        <li><a href="{{ url('hub_user_detail', hub.slug, hub_user.user.username) }}">{{hub_user}}</a></li>
+    {% endif %}
+    {% if tail %}
+    	<li>{{tail}}</li>
+    {% endif %}
+</ol>
+{% endmacro %}

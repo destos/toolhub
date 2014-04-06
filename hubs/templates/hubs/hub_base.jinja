@@ -1,0 +1,13 @@
+{% extends "_layouts/base.jinja" %}
+
+{% from "hubs/macros/navigation.jinja" import breadcrumbs %}
+
+{% block content %}
+<div class="col-md-12">
+    {% block breadcrumbs -%}
+        {{ breadcrumbs(hub, hub_user) }}
+    {%- endblock %}
+    <h1>{% block page_title %}Tool Hubs{% endblock %}</h1>
+    {% block hub_content %}{% endblock %}
+</div>
+{% endblock %}

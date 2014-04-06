@@ -73,7 +73,7 @@ INSTALLED_APPS = (
     'accounts',
     'base',
     'tools',  # tool models and views
-
+    'hubs',
 )
 
 # Place bcrypt first in the list, so it will be the default password hashing

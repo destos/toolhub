@@ -1,0 +1,9 @@
+{% extends "hubs/hub_base.jinja" %}
+
+{% block hub_content %}
+	<ul>
+	    {% for hub in hubs %}
+	    <li><a href="{{ hub.get_absolute_url() }}">{{ hub }}</a></li>
+	    {% endfor %}
+	</ul>
+{% endblock %}
