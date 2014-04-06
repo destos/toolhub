@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.views.generic import DetailView
+from tools.models import Tool
 
-# Create your views here.
+
+class ToolDetailView(DetailView):
+    template_name = 'tools/tool_detail.jinja'
+    slug_field = 'slug'
+    model = Tool
+    context_object_name = 'tool'

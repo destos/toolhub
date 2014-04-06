@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import permalink
+from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import AutoSlugField
 from mptt.models import MPTTModel, TreeManager, TreeForeignKey
 
@@ -8,13 +10,16 @@ class ToolClassificationManager(TreeManager):
     def published(self):
         return self.get_query_set().filter(status=ToolClassification.PUBLISHED)
 
+    def filtered(self):
+        return self.get_query_set().exclude(status=ToolClassification.BANNED)
+
 
 class ToolClassification(MPTTModel):
     """High level classification of a tool"""
     name = models.CharField(max_length=255, unique=True, blank=False)
+    slug = AutoSlugField(populate_from='name', max_length=255, unique=True)
     parent = TreeForeignKey(
         'self', null=True, blank=True, related_name='children')
-    slug = AutoSlugField(populate_from='name', max_length=255, unique=True)
     order = models.IntegerField(blank=False, default=0)
     # locked categories can't be moved or edited.
     locked = models.BooleanField(default=False)
@@ -38,28 +43,40 @@ class ToolClassification(MPTTModel):
     def __unicode__(self):
         return self.name
 
+    @permalink
+    def get_list_url(self):
+        pass
+
 
 class Tool(models.Model):
-    """Describes a specific tool in greater detail"""
+    """
+    Describes a specific tool in greater detail
+    """
     name = models.CharField(max_length=255, unique=True)
+    slug = AutoSlugField(populate_from='name', max_length=255, unique=True)
     description = models.TextField(blank=True)
     model_number = models.CharField(
         max_length=255, unique=True, blank=True, null=True)
     classifications = models.ManyToManyField(
         ToolClassification, related_name='tools', blank=False)
-    # used_with relationships, part of tool
-    # monetary value
-    value = models.FloatField(default=3.50)
-    # weight in grams
-    weight = models.FloatField(default=0.0)
+    # TODO: used_with relationships, parts of tool
+    # TODO: convert these to localized fields
+    value = models.FloatField(default=3.50, help_text='monetary value')
+    weight = models.FloatField(default=0.0, help_text='weight in grams')
 
     def __unicode__(self):
         return self.name
 
+    def main_class(self):
+        # TODO: do this mo-better
+        return self.classifications.first()
+
 
 class UserTool(models.Model):
     # Does the user have a nickname for the tool?
-    callsign = models.CharField(max_length=255, blank=True, null=True)
+    callsign = models.CharField(
+        max_length=255, blank=True, null=True,
+        help_text=_('The name of the hub'))
     tool_type = models.ForeignKey(
         Tool, related_name='user_tools', blank=False, null=False, default=None)
     owner = models.ForeignKey(
@@ -71,8 +88,8 @@ class UserTool(models.Model):
     DROP_OFF = 1
     ON_LOCATION = 2
     PORT_CHOICES = (
-        (PICKUP, 'can pickup'), (DROP_OFF, 'dropped off'),
-        (ON_LOCATION, 'use on premisis'))
+        (PICKUP, _('can pickup')), (DROP_OFF, _('dropped off')),
+        (ON_LOCATION, _('use on premisis')))
     portability = models.IntegerField(
         choices=PORT_CHOICES, default=PICKUP)
 

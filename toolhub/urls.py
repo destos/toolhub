@@ -10,6 +10,8 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('base.urls')),
     url(r'', include('accounts.urls')),
+    url(r'^tools/', include('tools.urls')),
+    url(r'^hub/', include('hubs.urls')),
 )
 
 if settings.DEBUG:
