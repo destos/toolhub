@@ -3,6 +3,7 @@
 
 # Django stuff
 Django==1.6.2
+#git+git://github.com/django/django.git@1.7b1#egg=django
 
 # Templates
 django_compressor
@@ -39,6 +40,7 @@ django-mptt==0.6.0
 django-extensions==1.3.3
 django-taggit==0.11.2
 django-class-based-auth-views==0.2
+# TODO: impliment password reset
 django-password-reset==0.7
 django-crispy-forms==1.4.0
 django-jinja==0.23.1

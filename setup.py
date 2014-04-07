@@ -22,14 +22,17 @@ setup(name='django-toolhub',
       #url='',
       #license='',
       packages=[
-          'toolhub', 'toolhub.migrations'],
+          # TODO: add all packages
+          'toolhub', 'toolhub.settings', 'tools', 'tools.migrations', 'hubs',
+          'hubs.migrations', 'hubs.backends', 'base', 'base.templatetags',
+          'accounts'],
       install_requires=[
           'South',
-          'Django>=1.6',],
+          'Django>=1.6'],
       classifiers=[
           'Development Status :: 4 - Beta',
           'Environment :: Web Environment',
           'Framework :: Django',
           'Intended Audience :: End Users/Desktop',
-          'Programming Language :: Python',],
+          'Programming Language :: Python'],
      )

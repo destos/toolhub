@@ -87,3 +87,5 @@ LOGGING = {
 }
 
 INTERNAL_IPS = ('127.0.0.1')
+
+SOUTH_TESTS_MIGRATE = False
