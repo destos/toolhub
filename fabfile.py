@@ -4,7 +4,7 @@ Starter fabfile for deploying the toolhub project.
 Change all the things marked CHANGEME. Other things can be left at their
 defaults if you are happy with the default layout.
 """
-
+import os
 import posixpath
 
 from fabric.api import run, local, env, settings, cd, task
@@ -12,6 +12,8 @@ from fabric.contrib.files import exists
 from fabric.operations import _prefix_commands, _prefix_env_vars
 #from fabric.decorators import runs_once
 #from fabric.context_managers import cd, lcd, settings, hide
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'test_app.settings'
 
 # CHANGEME
 env.hosts = ['user@toolhub.example.com']
