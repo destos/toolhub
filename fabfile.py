@@ -19,7 +19,7 @@ env.code_dir = '/srv/www/toolhub'
 env.project_dir = '/srv/www/toolhub/toolhub'
 env.static_root = '/srv/www/toolhub/static/'
 env.virtualenv = '/srv/www/toolhub/.virtualenv'
-env.code_repo = 'git@github.com:user/toolhub.git'
+env.code_repo = 'git@github.com:destos/toolhub.git'
 env.django_settings_module = 'toolhub.settings'
 
 # Python version

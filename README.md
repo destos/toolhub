@@ -1,6 +1,9 @@
 
 # The Toolhub Project #
 
+[![Build Status](https://travis-ci.org/destos/toolhub.png?branch=master)](https://travis-ci.org/destos/toolhub)
+[![Coverage Status](https://coveralls.io/repos/destos/toolhub/badge.png)](https://coveralls.io/r/destos/toolhub)
+
 ## About ##
 
 Describe your project here.

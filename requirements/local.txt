@@ -10,12 +10,14 @@
 Sphinx
 
 # Testing
+mox
 nose
-mock
 django-nose
+model_mommy
 coverage
 pep8
 pylint
+fabric
 
 # if you have issues on mavericks installing pycrypto use:
 # ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future pip install pycrypto
