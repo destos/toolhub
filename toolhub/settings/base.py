@@ -60,7 +60,6 @@ INSTALLED_APPS = (
     'django_extensions',
     'django_jinja',
     'djcelery',
-    'herokuapp',
     'mptt',
     'class_based_auth_views',
     'password_reset',

@@ -28,7 +28,14 @@ setup(name='django-toolhub',
           'accounts'],
       install_requires=[
           'South',
-          'Django>=1.6'],
+          'Django>=1.6'
+          'django_compressor',
+          'django-extensions==1.3.3',
+          'django-jinja==0.23.1',
+          'django-mptt==0.6.0',
+          'django-class-based-auth-views==0.2',
+          'django-password-reset==0.7',
+          'django-crispy-forms==1.4.0'],
       classifiers=[
           'Development Status :: 4 - Beta',
           'Environment :: Web Environment',
