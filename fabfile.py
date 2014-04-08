@@ -13,7 +13,6 @@ from fabric.operations import _prefix_commands, _prefix_env_vars
 #from fabric.decorators import runs_once
 #from fabric.context_managers import cd, lcd, settings, hide
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'test_app.settings'
 
 # CHANGEME
 env.hosts = ['user@toolhub.example.com']
