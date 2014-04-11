@@ -77,20 +77,20 @@ class Hub(TimeStampedModel):
     def __unicode__(self):
         return self.name
 
+    # TODO: add more permalinks to be used throughout the templates
     @permalink
     def get_absolute_url(self):
         return ('hub_detail', (), {'hub_slug': self.slug})
 
-    # TODO: add more permalinks to be used throughout the templates
     @permalink
     def get_edit_url(self):
-        pass
+        return ('hub_edit', (), {'hub_slug': self.slug})
 
     def add_user(self, user, is_admin=False):
         """
         Adds a new user and if they are the first user makes the user an
         admin and the owner. """
-        users_count = self.users.all().count()
+        users_count = self.user_count
         if users_count == 0:
             is_admin = True
         hub_user = HubUser.objects.create(
@@ -111,13 +111,11 @@ class Hub(TimeStampedModel):
         `HubUser` and a boolean value indicating whether the
         HubUser was created or not.
         """
-        users_count = self.users.all().count()
+        users_count = self.user_count
         if users_count == 0:
             is_admin = True
-
         hub_user, created = HubUser.objects.get_or_create(
             hub=self, user=user, defaults={'is_admin': is_admin})
-
         if users_count == 0:
             HubOwner.objects.create(
                 hub=self, hub_user=hub_user)
@@ -129,8 +127,7 @@ class Hub(TimeStampedModel):
         return self.users.all().count()
 
     def is_member(self, user):
-        # TODO: see if this can be done more efficiently with a query
-        return True if user in self.users.all() else False
+        return self.hub_users.filter(user=user).exists()
 
     def is_admin(self, user):
         return True if self.hub_users.filter(
