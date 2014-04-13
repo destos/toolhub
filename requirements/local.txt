@@ -18,6 +18,7 @@ coverage
 pep8
 pylint
 fabric
+tox
 
 # if you have issues on mavericks installing pycrypto use:
 # ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future pip install pycrypto
