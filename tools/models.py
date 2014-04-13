@@ -24,6 +24,7 @@ class ToolClassification(MPTTModel):
     # locked categories can't be moved or edited.
     locked = models.BooleanField(default=False)
 
+    # TODO: use model utils status
     IN_REVIEW = 0
     PUBLISHED = 1
     BANNED = 2
@@ -47,12 +48,32 @@ class ToolClassification(MPTTModel):
     def get_list_url(self):
         pass
 
+    # get_absolute_url overwritten by mptt_urls
+
+
+class ToolQuerySet(models.query.QuerySet):
+    def children_tools(self, tool_class):
+        """
+        Children tools are all tools that are related to the current tool class
+        node and it's children.
+        """
+        # TODO: check for being instance of ToolClassification
+        # This probably can be solved with mptt
+        children = [child.id for child in tool_class.get_children()]
+        children.append(tool_class.id)
+        return self.filter(parent__in=children)
+
 
 class ToolManager(models.Manager):
+    def get_query_set(self):
+        return ToolQuerySet(self.model, using=self._db)
 
     # TODO: create published model property
     def published(self):
         return self.get_query_set()
+
+    def children_tools(self, tool_class):
+        return self.get_query_set().children_tools(tool_class)
 
 
 class Tool(models.Model):
@@ -66,6 +87,8 @@ class Tool(models.Model):
         max_length=255, unique=True, blank=True, null=True)
     classifications = models.ManyToManyField(
         ToolClassification, related_name='tools', blank=False)
+    # TODO: rename to category, change proper mptt settings
+    parent = TreeForeignKey(ToolClassification)
     # TODO: used_with relationships, parts of tool
     # TODO: convert these to localized fields
     value = models.FloatField(default=3.50, help_text='monetary value')
@@ -78,7 +101,7 @@ class Tool(models.Model):
 
     def main_class(self):
         # TODO: do this mo-better
-        return self.classifications.first()
+        return self.parent
 
 
 class UserTool(models.Model):

@@ -1,0 +1,41 @@
+{% macro sibling_dropdown(class, siblings) %}
+<a href="#" class="dropdown-toggle"> {{class.name}} <b class="caret"></b></a>
+<ul class="dropdown-menu">
+    <li>
+        <a href="{{ class.get_absolute_url() }}"><strong>{{ class.name }}</strong></a>
+    </li>
+    {% if siblings %}
+        <li class="divider"></li>
+    {%- for sibling in siblings -%}
+        <li><a href="{{ sibling.get_absolute_url() }}">{{ sibling.name }}</a></li>
+    {%- endfor %}
+    {% endif %}
+</ul>
+{% endmacro %}
+
+{% macro breadcrumbs(class=false, tool=false) %}
+<ol class="breadcrumb">
+    {% if tool %}
+        {% set main_class = tool.main_class() %}
+    {% else %}
+        {% set main_class = class %}
+    {% endif %}
+    <li><a href="{{ url('tool_list') }}">tools</a></li>
+    {% if main_class %}
+        {# loop through ancestors #}
+        {% for parent in main_class.get_ancestors() %}
+            {% set siblings = parent.get_siblings() %}
+            <li>
+                {{ sibling_dropdown(parent, siblings)}}
+            </li>
+        {% endfor %}
+        {% set siblings = main_class.get_siblings() %}
+        <li>
+            {{ sibling_dropdown(main_class, siblings) }}
+        </li>
+    {% endif %}
+    {% if tool %}
+        <li>{{ tool.name }}</li>
+    {% endif %}
+</ol>
+{% endmacro %}
