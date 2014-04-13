@@ -183,6 +183,9 @@ class UserHubList(BaseHubList):
     template_name = 'hubs/user_hub_list.jinja'
 
     def get_queryset(self):
+        """
+        get all enabled + allowing private hubs for the logged in user
+        """
         user = self.request.user
         return super(
             UserHubList, self).get_queryset().enabled().get_for_user(user)

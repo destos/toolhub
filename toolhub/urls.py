@@ -11,7 +11,7 @@ urlpatterns = patterns(
     url(r'', include('base.urls')),
     url(r'', include('accounts.urls')),
     url(r'^tools/', include('tools.urls')),
-    url(r'^hub/', include('hubs.urls')),
+    url(r'^hubs/', include('hubs.urls')),
 )
 
 if settings.DEBUG:
