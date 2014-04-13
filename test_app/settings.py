@@ -29,7 +29,6 @@ INSTALLED_APPS = (
     'django_nose',
     'south',
     'compressor',
-    'debug_toolbar',
     'django_extensions',
     'django_jinja',
     'mptt',
@@ -46,3 +45,5 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ('--nocapture', )
 
 CELERY_ALWAYS_EAGER = True
+
+COMPRESS_ROOT = STATIC_URL

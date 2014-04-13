@@ -56,11 +56,11 @@ INSTALLED_APPS = (
 
     # Third-party apps, patches, fixes
     'compressor',
-    'debug_toolbar',
     'django_extensions',
     'django_jinja',
     'djcelery',
     'mptt',
+    'mptt_urls',
     'class_based_auth_views',
     'password_reset',
     'crispy_forms',
@@ -156,7 +156,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = [
@@ -208,7 +207,7 @@ def custom_show_toolbar(request):
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
     'SHOW_TOOLBAR_CALLBACK': 'toolhub.settings.base.custom_show_toolbar',
-    'INSERT_BEFORE': 'body',
+    'INSERT_AFTER': 'body',
     'SHOW_TEMPLATE_CONTEXT': True,
     'ENABLE_STACKTRACES': True,
 }
@@ -238,9 +237,29 @@ WSGI_APPLICATION = 'toolhub.wsgi.application'
 
 # Define your database connections
 # Parse database configuration from $DATABASE_URL
-import dj_database_url
+# import dj_database_url
+# DATABASES = {
+#     'default': dj_database_url.config(default='postgres://localhost')
+# }
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://localhost')
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db/development.sqlite3',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+        #'OPTIONS': {
+        #    'init_command': 'SET storage_engine=InnoDB',
+        #    'charset' : 'utf8',
+        #    'use_unicode' : True,
+        #},
+        #'TEST_CHARSET': 'utf8',
+        #'TEST_COLLATION': 'utf8_general_ci',
+    },
+    # 'slave': {
+    #     ...
+    # },
 }
 
 # Uncomment this and set to all slave DBs in use on the site.

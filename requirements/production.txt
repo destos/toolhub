@@ -37,6 +37,7 @@ South
 
 # Utility
 django-mptt==0.6.0
+git+git://github.com/destos/django-mptt-urls.git#egg=django-mptt-urls
 django-extensions==1.3.3
 django-taggit==0.11.2
 django-class-based-auth-views==0.2
@@ -47,6 +48,6 @@ django-jinja==0.23.1
 django-sslify==0.2.3
 
 # heroku requirements
-dj-database-url==0.3.0
-django-herokuapp==0.9.18
-pystache==0.5.3
+# dj-database-url==0.3.0
+# django-herokuapp==0.9.18
+# pystache==0.5.3
