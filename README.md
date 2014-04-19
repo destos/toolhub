@@ -1,9 +1,8 @@
-[![Stories in Ready](https://badge.waffle.io/destos/toolhub.png?label=ready&title=Ready)](https://waffle.io/destos/toolhub)
-
 # The Toolhub Project #
 
 [![Build Status](https://travis-ci.org/destos/toolhub.png?branch=master)](https://travis-ci.org/destos/toolhub)
 [![Coverage Status](https://coveralls.io/repos/destos/toolhub/badge.png)](https://coveralls.io/r/destos/toolhub)
+[![Stories in Ready](https://badge.waffle.io/destos/toolhub.png?label=ready&title=Ready)](https://waffle.io/destos/toolhub)
 
 ## About ##
 
