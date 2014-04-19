@@ -1,0 +1,12 @@
+{% extends '_layouts/base.jinja' %}
+
+{% block content %}
+<div class="col-md-12">
+    {{ crispy(form) }}
+    <div class="col-md-offset-2">
+        <a href="{{ url('login') }}">{{ _('Login') }}</a>
+        <br>
+        <a href="{{ url('account_password_reset') }}">{{ _("Reset password") }}</a>
+    </div>
+</div>
+{% endblock %}

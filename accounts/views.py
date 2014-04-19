@@ -1,37 +1,99 @@
-from class_based_auth_views.views import (
-    LoginView as ClassLoginView, LogoutView as ClassLogoutView)
-from django.contrib.auth.models import User
+from account import views as account_views
 from django.core.urlresolvers import reverse
+from django.contrib import messages
+from django.contrib.auth.models import User
 from django.views.generic import DetailView
-from django.views.generic.edit import FormView
+from django.utils.translation import ugettext as _
 
-from accounts.forms import RegisterForm, LoginForm
+from accounts import forms
 
 
-class LoginView(ClassLoginView):
-    form_class = LoginForm
+class SettingsView(account_views.SettingsView):
+    template_name = 'accounts/settings.jinja'
+    form_class = forms.SettingsForm
+
+    def __init__(self, *args, **kwargs):
+        super(SettingsView, self).__init__(*args, **kwargs)
+        self.messages['email_changed'] = {
+            "level": messages.INFO,
+            "text": _("Email verification email send to your new email.")
+        }
+
+    def update_email(self, form, confirm=None):
+        email = form.cleaned_data["email"].strip()
+        if email != self.primary_email_address.email:
+            messages.add_message(
+                self.request,
+                self.messages["email_changed"]["level"],
+                self.messages["email_changed"]["text"]
+            )
+        super(SettingsView, self).update_email(form, confirm)
+
+
+class LoginView(account_views.LoginView):
     template_name = 'accounts/login.jinja'
+    form_class = forms.LoginUsernameForm
 
 
-class LogoutView(ClassLogoutView):
-    template_name = 'accounts/logout.jinja'
+class LogoutView(account_views.LogoutView):
+
+    def get_redirect_url(self):
+        return reverse('home')
+
+    # use the default post functionality, which is to logout and redirect
+    def get(self, *args, **kwargs):
+        return self.post(*args, **kwargs)
 
 
-# wanted to use CreateView, but that may not be the best use case
-class RegistrationView(FormView):
-    form_class = RegisterForm
-    template_name = 'accounts/register.jinja'
-    # TODO: update
-    # success_url = reverse('account')
+# TODO: create email confirmation template
+class SignupView(account_views.SignupView):
+    template_name = 'accounts/signup.jinja'
+    # template_name_ajax = "account/ajax/signup.jinja"
+    template_name_email_confirmation_sent = (
+        "account/email_confirmation_sent.jinja")
+    # template_name_email_confirmation_sent_ajax = (
+    #     "account/ajax/email_confirmation_sent.jinja")
+    template_name_signup_closed = "account/signup_closed.jinja"
+    # template_name_signup_closed_ajax = "account/ajax/signup_closed.jinja"
+    form_class = forms.SignupForm
 
-    def form_valid(self, form):
-        # create user and send validation messages
-        form.save()
-        return super(RegistrationView, self).form_valid(form)
+
+class ConfirmEmailView(account_views.ConfirmEmailView):
+    def get_template_names(self):
+        return {
+            'GET': ['accounts/email_confirm.jinja'],
+            'POST': ['accounts/email_confirmed.jinja']
+        }[self.request.method]
+
+    def get_redirect_url(self):
+        return reverse('account_settings')
 
 
-class AccountView(DetailView):
-    model = User
+class ChangePasswordView(account_views.ChangePasswordView):
+    template_name = 'accounts/password_change.jinja'
+    form_class = forms.ChangePasswordForm
+
+    def get_success_url(self):
+        return reverse('account_settings')
+
+
+class PasswordResetView(account_views.PasswordResetView):
+    template_name = 'accounts/password_reset.jinja'
+    template_name_sent = 'accounts/password_reset_sent.jinja'
+    form_class = forms.PasswordResetForm
+
+
+class PasswordResetTokenView(account_views.PasswordResetTokenView):
+    template_name = 'accounts/password_reset_token.jinja'
+    template_name_fail = 'accounts/password_reset_token_fail.jinja'
+    form_class = forms.PasswordResetTokenForm
+
+    def get_success_url(self):
+        return reverse('login')
+
+
+class DeleteView(account_views.DeleteView):
+    template_name = 'accounts/delete.jinja'
 
 
 class UserDetailView(DetailView):

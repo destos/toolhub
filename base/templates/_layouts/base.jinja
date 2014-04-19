@@ -64,7 +64,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle">{{ user.username }} <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="{{ url('account') }}">Account Preferences</a></li>
+              <li><a href="{{ url('account_settings') }}">Account Settings</a></li>
               <li><a href="{{ url('user_hub_list') }}">Your Hubs</a></li>
               <li class="divider"></li>
               <li><a href="{{ url('logout') }}">Logout</a></li>
@@ -72,7 +72,7 @@
           </li>
           {% else %}
           <li><a href="{{ url('login') }}">Login</a></li>
-          <li><a href="{{ url('register') }}">Register</a></li>
+          <li><a href="{{ url('signup') }}">Sign up</a></li>
           {% endif %}
         </ul>
       </div><!--/.navbar-collapse -->
@@ -86,6 +86,16 @@
   <div role="main">
     <div class="container">
       <div class="row">
+      {% if messages %}
+        <div class="col-md-12" ng-controller="MessagesCtrl">
+          {% for message in messages %}
+          <div class="alert {{message.tags}}" ng-init="messages[{{loop.index}}]=true;" ng-show="messages[{{loop.index}}]">
+            <button type="button" class="close" aria-hidden="true" ng-click="messages[{{loop.index}}]=false">&times;</button>
+            {{message}}
+          </div>
+          {% endfor %}
+        </div>
+      {% endif %}
   {% block content %}{% endblock %}
       </div>
     </div>

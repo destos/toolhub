@@ -29,6 +29,8 @@ HEROKU_APP_NAME = 'toolhub'
 SITE_DOMAIN = 'toolhub.herokuapp.com'
 PREPEND_WWW = False
 
+SITE_ID = 1  # toolhub.co
+
 # Your project root
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__) + "../../../")
 BASE_DIR = PROJECT_ROOT
@@ -52,9 +54,11 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.humanize',
     'django.contrib.syndication',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
 
     # Third-party apps, patches, fixes
+    'account',
     'compressor',
     'django_extensions',
     'django_jinja',
@@ -156,6 +160,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "account.middleware.LocaleMiddleware",
+    "account.middleware.TimezoneMiddleware",
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = [
@@ -168,6 +174,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     'django.core.context_processors.csrf',
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
+    'account.context_processors.account',
 ]
 
 TEMPLATE_DIRS = (
@@ -190,9 +197,9 @@ TEMPLATE_LOADERS = (
 DEFAULT_JINJA2_TEMPLATE_EXTENSION = '.jinja'
 JINJA2_AUTOESCAPE = True
 JINJA2_EXTENSIONS = [
+    'jinja2.ext.i18n',
     'compressor.contrib.jinja2ext.CompressorExtension'  # compressor fix
 ]
-
 
 #crispt_forms
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -226,6 +233,9 @@ DEBUG_TOOLBAR_PATCH_SETTINGS = False
 #     'debug_toolbar.panels.signals.SignalDebugPanel',
 #     'debug_toolbar.panels.logger.LoggingPanel',
 # )
+#account
+ACCOUNT_HOOKSET = 'accounts.hooks.AccountHookSet'
+ACCOUNT_CONTACT_EMAIL = 'patrick@forringer.com'
 
 # Specify a custom user model to use
 #AUTH_USER_MODEL = 'accounts.MyUser'
@@ -340,3 +350,14 @@ LOGGING = {
 #CEF_VENDOR = 'Your Company'
 #CEF_VERSION = '0'
 #CEF_DEVICE_VERSION = '0'
+
+# django messages framework customization
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-warning',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-error'
+}

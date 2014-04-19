@@ -1,0 +1,20 @@
+{% extends '_layouts/base.jinja' %}
+
+{% block page_title %}{% trans %}Confirm email{% endtrans %}{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+    <form method="post" action="{{ url("account_confirm_email", key=confirmation.key) }}" class="form-horizontal">
+    <legend>{% trans %}Confirm email{% endtrans %}</legend>
+        <fieldset>
+            {% csrf_token %}
+            <p>{% trans email=confirmation.email_address.email %}Confirm email address <b>{{ email }}</b>?{% endtrans %}</p>
+        </fieldset>
+        <div class="form-group">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">{{ _("Confirm") }}</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

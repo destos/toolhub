@@ -1,0 +1,16 @@
+{% extends '_layouts/base.jinja' %}
+
+{% block page_title %}Delete Account{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+    <h1>Delete Account</h1>
+
+    <p>If you delete your account, your information will be <b>expunged within {{ ACCOUNT_DELETION_EXPUNGE_HOURS }} hours</b> for safety reasons.</p>
+
+    <form method="post" action="{{ url('account_delete') }}" autocapitalize="off">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete My Account</button>
+    </form>
+</div>
+{% endblock %}
