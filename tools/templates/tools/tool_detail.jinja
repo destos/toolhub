@@ -1,16 +1,10 @@
 {% extends "_layouts/base.jinja" %}
 
+{% from "tools/macros/navigation.jinja" import breadcrumbs %}
+
 {% block content %}
 <div class="col-md-12">
-    <ol class="breadcrumb">
-    {% set main_class = tool.main_class() %}
-    {% for parent in main_class.get_ancestors() %}
-        <li><a href="{{ parent.get_list_url() }}">{{ parent.name }}</a></li>
-    {% endfor %}
-    {% if main_class %}
-        <li><a href="{{ main_class.get_list_url() }}">{{ main_class.name }}</a></li>
-    {% endif %}
-    </ol>
-    {{tool}}
+    <h1>{{tool}}</h1>
+    {{ breadcrumbs(tool.main_class(), tool) }}
 </div>
 {% endblock %}
