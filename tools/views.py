@@ -1,4 +1,4 @@
-from django.views.generic import DetailView, ListView
+from django.views.generic import TemplateView, ListView
 from tools.models import Tool
 
 
@@ -11,7 +11,7 @@ class MPTTUrlMixin(object):
         self.mptt_object = kwargs.pop('mptt_urls', {}).get('object', None)
         return super(MPTTUrlMixin, self).dispatch(request, *args, **kwargs)
 
-    def get_context_data(self):
+    def get_context_data(self, object=None):
         context = super(MPTTUrlMixin, self).get_context_data()
         context[self.mptt_context_object_name] = self.mptt_object
         return context
@@ -33,8 +33,9 @@ class ToolList(MPTTUrlMixin, ListView):
             return qs
 
 
-class ToolDetailView(DetailView):
+class ToolDetailView(MPTTUrlMixin, TemplateView):
     template_name = 'tools/tool_detail.jinja'
-    slug_field = 'slug'
-    model = Tool
-    context_object_name = 'tool'
+    mptt_context_object_name = 'tool'
+
+    def get_object(self):
+        return self.mptt_object

@@ -1,26 +1,21 @@
-from django.conf.urls import url, patterns, include
-from mptt_urls import register as mptt_urls_register
+from django.conf.urls import url, patterns
+from mptt_urls import url_mptt
 
 from tools import views
-from tools import models
 
 
 mptt_urls_tool_settings = {
     'node': {
-        'model': models.ToolClassification,
+        'model': 'tools.models.ToolClassification',
         'view': 'tools.views.ToolList',
-        'parent': 'parent',
-        'slug': 'slug',
+        'slug_field': 'slug',
     },
     'leaf': {
-        'model': models.Tool,
+        'model': 'tools.models.Tool',
         'view': 'tools.views.ToolDetailView',
-        'parent': 'parent',
-        'slug': 'slug',
+        'slug_field': 'slug',
     }
 }
-
-mptt_urls_register('tools', mptt_urls_tool_settings)
 
 urlpatterns = patterns(
     '',
@@ -28,7 +23,8 @@ urlpatterns = patterns(
     # url(r'^(?P<tool_slug>[-_\w]+)/$',
     #     views.ToolDetailView.as_view(), name='tool_detail'),
     # capturing pattern, place new urls above this
-    url(r'^', include('mptt_urls.urls'), {
-        'settings': mptt_urls_tool_settings}, name='tool_list_class'),
+    url_mptt(r'^(?P<url>.*)',
+             settings=mptt_urls_tool_settings,
+             name='tool_list_class'),
 
 )
