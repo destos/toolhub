@@ -80,11 +80,11 @@ class Hub(TimeStampedModel):
     # TODO: add more permalinks to be used throughout the templates
     @permalink
     def get_absolute_url(self):
-        return ('hub_detail', (), {'hub_slug': self.slug})
+        return ('hubs:detail', (), {'hub_slug': self.slug})
 
     @permalink
     def get_edit_url(self):
-        return ('hub_edit', (), {'hub_slug': self.slug})
+        return ('hubs:edit', (), {'hub_slug': self.slug})
 
     def add_user(self, user, is_admin=False):
         """
@@ -178,7 +178,7 @@ class HubUser(TimeStampedModel):
 
     @permalink
     def get_absolute_url(self):
-        return ('hub_user_detail', (),
+        return ('hubs:user_detail', (),
                 {'hub_slug': self.hub.slug,
                  'user_username': self.user.username})
 

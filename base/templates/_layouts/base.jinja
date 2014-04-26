@@ -56,23 +56,23 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li><a href="{{url('tool_list')}}">Tools</a></li>
-          <li><a href="{{url('hub_list')}}">Hubs</a></li>
+          <li><a href="{{url('tools:list')}}">Tools</a></li>
+          <li><a href="{{url('hubs:list')}}">Hubs</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated() %}
           <li class="dropdown">
             <a href="#" class="dropdown-toggle">{{ user.username }} <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="{{ url('account_settings') }}">Account Settings</a></li>
-              <li><a href="{{ url('user_hub_list') }}">Your Hubs</a></li>
+              <li><a href="{{ url('account:settings') }}">Account Settings</a></li>
+              <li><a href="{{ url('hubs:user_hub_list') }}">Your Hubs</a></li>
               <li class="divider"></li>
-              <li><a href="{{ url('logout') }}">Logout</a></li>
+              <li><a href="{{ url('account:logout') }}">Logout</a></li>
             </ul>
           </li>
           {% else %}
-          <li><a href="{{ url('login') }}">Login</a></li>
-          <li><a href="{{ url('signup') }}">Sign up</a></li>
+          <li><a href="{{ url('account:login') }}">Login</a></li>
+          <li><a href="{{ url('account:signup') }}">Sign up</a></li>
           {% endif %}
         </ul>
       </div><!--/.navbar-collapse -->

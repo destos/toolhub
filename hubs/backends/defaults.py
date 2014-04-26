@@ -170,7 +170,7 @@ class RegistrationBackend(BaseBackend):
         Initiates the hub and user account creation process
         """
         if request.user.is_authenticated():
-            return redirect("hub_add")
+            return redirect("hubs:add")
         form = HubRegistrationForm(request.POST or None)
         if form.is_valid():
             try:
@@ -184,7 +184,7 @@ class RegistrationBackend(BaseBackend):
                 user.is_active = False
                 user.save()
             else:
-                return redirect("hub_add")
+                return redirect("hubs:add")
             hub = create_hub(
                 user, form.cleaned_data['name'],
                 form.cleaned_data['slug'], is_active=False)

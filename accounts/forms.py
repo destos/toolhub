@@ -69,7 +69,7 @@ class SignupForm(CrispyFormMixin, account_forms.SignupForm):
 class ChangePasswordForm(CrispyFormMixin, account_forms.ChangePasswordForm):
     def __init__(self, *args, **kwargs):
         super(ChangePasswordForm, self).__init__(*args, **kwargs)
-        self.helper.form_action = 'account_password'
+        self.helper.form_action = 'account:password'
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-md-3'
         self.helper.field_class = 'col-md-4'
@@ -91,7 +91,7 @@ class ChangePasswordForm(CrispyFormMixin, account_forms.ChangePasswordForm):
 class PasswordResetForm(CrispyFormMixin, account_forms.PasswordResetForm):
     def __init__(self, *args, **kwargs):
         super(PasswordResetForm, self).__init__(*args, **kwargs)
-        self.helper.form_action = 'account_password_reset'
+        self.helper.form_action = 'account:password_reset'
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-md-2'
         self.helper.field_class = 'col-md-10'

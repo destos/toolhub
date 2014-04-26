@@ -8,10 +8,10 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'', include('base.urls')),
-    url(r'', include('accounts.urls')),
-    url(r'^tools/', include('tools.urls')),
-    url(r'^hubs/', include('hubs.urls')),
+    url(r'', include('base.urls', namespace='base')),
+    url(r'^account/', include('accounts.urls', namespace='account')),
+    url(r'^tools/', include('tools.urls', namespace='tools')),
+    url(r'^hubs/', include('hubs.urls', namespace='hubs')),
 )
 
 if settings.DEBUG:

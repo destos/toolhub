@@ -2,10 +2,14 @@ from account import views as account_views
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.views.generic import DetailView
+from django.views.generic import DetailView, TemplateView
 from django.utils.translation import ugettext as _
 
 from accounts import forms
+
+
+class ToolManager(TemplateView):
+    pass
 
 
 class SettingsView(account_views.SettingsView):
@@ -38,7 +42,7 @@ class LoginView(account_views.LoginView):
 class LogoutView(account_views.LogoutView):
 
     def get_redirect_url(self):
-        return reverse('home')
+        return reverse('base:home')
 
     # use the default post functionality, which is to logout and redirect
     def get(self, *args, **kwargs):
