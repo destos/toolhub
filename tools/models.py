@@ -5,6 +5,8 @@ from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import AutoSlugField
 from mptt.models import MPTTModel, TreeManager, TreeForeignKey
 
+from lending.models import LendingAction
+
 
 class ToolClassificationManager(TreeManager):
     def published(self):
@@ -113,6 +115,7 @@ class UserTool(models.Model):
         Tool, related_name='user_tools', blank=False, null=False, default=None)
     owner = models.ForeignKey(
         User, blank=False, null=False, default=None, related_name='tools')
+    # instructions = models.ForeignKey('UserToolInstructions', blank=True)
 
     # currently quality or workability of tool?
     # details on the desired portability of the tool
@@ -128,3 +131,20 @@ class UserTool(models.Model):
     def __unicode__(self):
         return u'%s\'s %s' % (
             self.owner, (self.callsign or self.tool_type.name))
+
+    def get_latest_lending_action(self):
+        """
+        Returns the current lending state this user's tool is in.
+        States can be then looked on in lending.models.
+        """
+        return self.lending_transactions.latest(
+            'created').history.latest('created')
+
+    @property
+    def lent(self):
+        return self.get_latest_lending_action().action not in (
+            LendingAction.CLOSING_ACTIONS)
+
+
+# class UserToolInstructions(models.Model):
+#     pass
