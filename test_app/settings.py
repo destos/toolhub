@@ -43,7 +43,7 @@ INSTALLED_APPS = (
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ('--nocapture', )
-
+SOUTH_TESTS_MIGRATE = False
 CELERY_ALWAYS_EAGER = True
 
 COMPRESS_ROOT = STATIC_URL
