@@ -1,0 +1,13 @@
+{% macro inline_tool(tool, wrapper_class='col-sm-6 col-md-4') %}
+<div class="inline-tool {{ wrapper_class }}">
+    <div class="thumbnail">
+        <img src="http://placekitten.com/g/300/200" alt="">
+        <div class="caption">
+            <h3><a href="{{ tool.get_absolute_url() }}">{{tool.name}}</a></h3>
+            <p>{{tool.description}}<p>
+            <p>category: <a href="{{tool.parent.get_absolute_url()}}">{{tool.parent.name}}</a><p>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
