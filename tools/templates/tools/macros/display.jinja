@@ -11,3 +11,22 @@
 </div>
 {% endmacro %}
 
+{% macro inline_user_tool(user_tool, wrapper_class='col-sm-6 col-md-4') %}
+{% set tool = user_tool.tool_type %}
+<div class="inline-tool user-tool {{ wrapper_class }}">
+    <div class="thumbnail">
+        <img src="http://placekitten.com/g/300/200" alt="">
+        <div class="caption">
+            <h3>{{user_tool.display_name}}</h3>
+            {# <h3><small>is: </small><a href="{{ tool.get_absolute_url() }}">{{tool.name}}</a></h3> #}
+            <p>{{tool.description}}<p>
+            {# <p>category: <a href="{{tool.parent.get_absolute_url()}}">{{tool.parent.name}}</a><p> #}
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+{# for use when we make the tool management area draggable into groups #}
+{% macro draggable_tool(tool) %}
+
+{% endmacro %}

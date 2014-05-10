@@ -1,0 +1,18 @@
+{% extends '_layouts/account.jinja' %}
+
+{% from "tools/macros/display.jinja" import inline_user_tool %}
+
+{% block account_nav %}{{account_nav('manager')}}{% endblock %}
+
+{% block content %}
+{{super()}}
+<div class="col-md-2">
+    <button class="btn btn-success">Add Tool</button>
+</div>
+<div class="col-md-10">
+    {% for tool in object_list %}
+    {{inline_user_tool(tool, wrapper_class='col-sm-6 col-md-4')}}
+    {% endfor %}
+</div>
+
+{% endblock %}

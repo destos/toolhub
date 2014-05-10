@@ -4,13 +4,14 @@ from accounts import views
 
 user_tool_patterns = patterns(
     "",
-    url(r"", views.ToolManager.as_view(), name="tool_manager"),
+    url(r"^lending/$", views.LendingManager.as_view(), name="lending"),
+    url(r"^manager/$", views.ToolManager.as_view(), name="manager"),
 )
 
 # namespaced under account:
 urlpatterns = patterns(
     "",
-    url(r"^settings/$", views.SettingsView.as_view(), name="settings"),
+    url(r"^$", views.SettingsView.as_view(), name="settings"),
     url(r"^login/$", views.LoginView.as_view(), name="login"),
     url(r"^logout/$", views.LogoutView.as_view(), name="logout"),
     url(r"^register/$", views.SignupView.as_view(), name="signup"),
@@ -26,5 +27,5 @@ urlpatterns = patterns(
         views.PasswordResetTokenView.as_view(),
         name="password_reset_token"),
     url(r"^delete/$", views.DeleteView.as_view(), name="delete"),
-    url(r"^tools/$", include(user_tool_patterns, namespace="tools")),
+    url(r"^tool/", include(user_tool_patterns, namespace="tool")),
 )

@@ -1,9 +1,7 @@
-{% extends '_layouts/base.jinja' %}
+{% extends '_layouts/account.jinja' %}
 
 {% block content %}
-<div class="col-md-12">
-    <h1>{{_('Account Settings')}}</h1>
-</div>
+{{super()}}
 <div class="col-md-6">
     {{crispy(form)}}
 </div>

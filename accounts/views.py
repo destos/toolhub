@@ -2,14 +2,22 @@ from account import views as account_views
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.views.generic import DetailView, TemplateView
+from django.views.generic import DetailView, TemplateView, ListView
 from django.utils.translation import ugettext as _
 
 from accounts import forms
+from tools.models import UserTool
+from utils.mixins import RestrictToUserMixin
 
 
-class ToolManager(TemplateView):
-    pass
+class ToolManager(RestrictToUserMixin, ListView):
+    template_name = 'accounts/tool_manager.jinja'
+    restrict_user_field = 'owner'
+    model = UserTool
+
+
+class LendingManager(TemplateView):
+    template_name = 'accounts/lending_manager.jinja'
 
 
 class SettingsView(account_views.SettingsView):
@@ -70,7 +78,7 @@ class ConfirmEmailView(account_views.ConfirmEmailView):
         }[self.request.method]
 
     def get_redirect_url(self):
-        return reverse('account_settings')
+        return reverse('account:settings')
 
 
 class ChangePasswordView(account_views.ChangePasswordView):
@@ -78,7 +86,7 @@ class ChangePasswordView(account_views.ChangePasswordView):
     form_class = forms.ChangePasswordForm
 
     def get_success_url(self):
-        return reverse('account_settings')
+        return reverse('account:settings')
 
 
 class PasswordResetView(account_views.PasswordResetView):
@@ -93,7 +101,7 @@ class PasswordResetTokenView(account_views.PasswordResetTokenView):
     form_class = forms.PasswordResetTokenForm
 
     def get_success_url(self):
-        return reverse('login')
+        return reverse('account:login')
 
 
 class DeleteView(account_views.DeleteView):

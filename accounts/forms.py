@@ -10,7 +10,7 @@ from toolhub.forms import CrispyFormMixin
 class LoginUsernameForm(CrispyFormMixin, account_forms.LoginUsernameForm):
     def __init__(self, *args, **kwargs):
         super(LoginUsernameForm, self).__init__(*args, **kwargs)
-        self.helper.form_action = 'login'
+        self.helper.form_action = 'account:login'
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-md-3'
         self.helper.field_class = 'col-md-9'
@@ -35,7 +35,7 @@ class SignupForm(CrispyFormMixin, account_forms.SignupForm):
 
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
-        self.helper.form_action = 'signup'
+        self.helper.form_action = 'account:signup'
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-md-2'
         self.helper.field_class = 'col-md-8'
@@ -136,7 +136,7 @@ class PasswordResetTokenForm(
 class SettingsForm(CrispyFormMixin, account_forms.SettingsForm):
     def __init__(self, *args, **kwargs):
         super(SettingsForm, self).__init__(*args, **kwargs)
-        self.helper.form_action = 'account_settings'
+        self.helper.form_action = 'account:settings'
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-md-3'
         self.helper.field_class = 'col-md-9'

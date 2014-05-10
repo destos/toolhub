@@ -68,6 +68,7 @@ INSTALLED_APPS = (
     'class_based_auth_views',
     'password_reset',
     'crispy_forms',
+    'braces',
 
     # Database migrations
     'south',
