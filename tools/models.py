@@ -129,8 +129,11 @@ class UserTool(models.Model):
         choices=PORT_CHOICES, default=PICKUP)
 
     def __unicode__(self):
-        return u'%s\'s %s' % (
-            self.owner, (self.callsign or self.tool_type.name))
+        return u'%s\'s %s' % self.owner, self.display_name()
+
+    @property
+    def display_name(self):
+        return self.callsign or self.tool_type.name
 
     def get_latest_lending_action(self):
         """
