@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="col-md-12">
-    <form method="post" action="{{ url("account_confirm_email", key=confirmation.key) }}" class="form-horizontal">
+    <form method="post" action="{{ url("account:confirm_email", key=confirmation.key) }}" class="form-horizontal">
     <legend>{% trans %}Confirm email{% endtrans %}</legend>
         <fieldset>
             {% csrf_token %}

@@ -11,7 +11,7 @@
     <ul class="list-group">
         {% for user_tool in user.tools.all() %}
         <li class="list-group-item">
-            <a href="{{url('tool_detail', slug=user_tool.tool_type.slug)}}">
+            <a href="{{url('tools:detail', slug=user_tool.tool_type.slug)}}">
                 <h4 class="list-group-item-heading">{{user_tool.callsign|default(user_tool.tool_type.name)}}</h4>
                 <p class="list-group-item-text">{{user_tool.tool_type.description}}<p>
             </a>

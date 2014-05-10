@@ -6,7 +6,7 @@
 
 <h1>{{ hub }}'s Members</h1>
 <ul>
-    <li><a href="{{ url( "hub_user_add", hub.slug) }}">Add a member</a></li>
+    <li><a href="{{ url( "hubs:user_add", hub.slug) }}">Add a member</a></li>
 </ul>
 
 {{ user_list(hub) }}

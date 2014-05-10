@@ -20,7 +20,7 @@
     {% else %}
         {% set main_class = class %}
     {% endif %}
-    <li><a href="{{ url('tool_list') }}">tools</a></li>
+    <li><a href="{{ url('tools:list') }}">tools</a></li>
     {% if main_class %}
         {# loop through ancestors #}
         {% for parent in main_class.get_ancestors() %}

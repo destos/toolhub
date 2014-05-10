@@ -149,7 +149,7 @@ class HubSignup(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated():
-            return redirect('hub_add')
+            return redirect('hubs:add')
         return super(HubSignup, self).dispatch(request, *args, **kwargs)
 
     def get_success_url(self):

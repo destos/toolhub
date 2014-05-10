@@ -38,4 +38,7 @@ class ToolDetailView(MPTTUrlMixin, TemplateView):
     mptt_context_object_name = 'tool'
 
     def get_object(self):
-        return self.mptt_object
+        if self.mptt_object:
+            return self.mptt_object
+        else:
+            return super(ToolDetailView, self).get_object()

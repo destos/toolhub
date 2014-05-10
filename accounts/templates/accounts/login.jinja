@@ -5,7 +5,7 @@
     {{ crispy(form) }}
 </div>
 <div class="col-md-6">
-    <p>Don't have an account? <a href="{{ url('signup') }}" data-ajax="false">{{ _('Sign up!') }}</a></p>
-    <p>Forgot your password? <a href="{{ url('account_password_reset') }}">{{ _("Reset your password!") }}</a></p>
+    <p>Don't have an account? <a href="{{ url('account:signup') }}" data-ajax="false">{{ _('Sign up!') }}</a></p>
+    <p>Forgot your password? <a href="{{ url('account:password_reset') }}">{{ _("Reset your password!") }}</a></p>
 </div>
 {% endblock content %}

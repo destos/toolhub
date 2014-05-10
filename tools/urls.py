@@ -17,14 +17,14 @@ mptt_urls_tool_settings = {
     }
 }
 
+# namespaced under hubs:
 urlpatterns = patterns(
     '',
-    url(r'^$', views.ToolList.as_view(), name='tool_list'),
-    # url(r'^(?P<tool_slug>[-_\w]+)/$',
-    #     views.ToolDetailView.as_view(), name='tool_detail'),
+    url(r'^$', views.ToolList.as_view(), name='list'),
+    url(r'^(?P<tool_slug>[-_\w]+)/$',
+        views.ToolDetailView.as_view(), name='detail'),
     # capturing pattern, place new urls above this
     url_mptt(r'^(?P<url>.*)',
              settings=mptt_urls_tool_settings,
-             name='tool_list_class'),
-
+             name='list_class'),
 )
