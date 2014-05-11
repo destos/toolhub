@@ -78,6 +78,7 @@ class ToolManager(models.Manager):
         return self.get_query_set().children_tools(tool_class)
 
 
+# Specific tool types
 class Tool(models.Model):
     """
     Describes a specific tool in greater detail
@@ -110,7 +111,7 @@ class UserTool(models.Model):
     # Does the user have a nickname for the tool?
     callsign = models.CharField(
         max_length=255, blank=True, null=True,
-        help_text=_('The name of the hub'))
+        help_text=_('your nickname of the tool'))
     tool_type = models.ForeignKey(
         Tool, related_name='user_tools', blank=False, null=False, default=None)
     owner = models.ForeignKey(
@@ -124,12 +125,12 @@ class UserTool(models.Model):
     ON_LOCATION = 2
     PORT_CHOICES = (
         (PICKUP, _('can pickup')), (DROP_OFF, _('dropped off')),
-        (ON_LOCATION, _('use on premisis')))
+        (ON_LOCATION, _('can use on premisis')))
     portability = models.IntegerField(
         choices=PORT_CHOICES, default=PICKUP)
 
     def __unicode__(self):
-        return u'%s\'s %s' % self.owner, self.display_name()
+        return u"%s's %s" % (self.owner, self.display_name,)
 
     @property
     def display_name(self):

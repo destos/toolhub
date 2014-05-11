@@ -1,0 +1,19 @@
+{% extends "_layouts/base.jinja" %}
+
+{% block content %}
+<div class="col-md-12">
+    <h2>Requesting to borrow {{usertool.display_name}} from {{usertool.owner}}, via hub: {{hub.name}}</h2>
+    {% set port = usertool.portability %}
+    <p>
+    {%- if port == usertool.PICKUP -%}
+        You can pickup this tool once the request is accepted.
+    {%- elif port == usertool.DROP_OFF -%}
+        {{usertool.owner}} will drop the tool off after the request is accepted.
+    {%- elif port == usertool.ON_LOCATION -%}
+        {{usertool.owner}} only allows this tool to be used on their premesis.
+    {%- endif -%}
+    </p>
+    {{crispy(form)}}
+</div>
+
+{% endblock %}

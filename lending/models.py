@@ -1,6 +1,9 @@
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models import Q
+from django.utils.translation import ugettext_lazy as _
+# from django.db.models import Q
+
 from django_extensions.db.models import TimeStampedModel
 
 
@@ -17,15 +20,15 @@ class LendingAction(TimeStampedModel):
         RECIEVED: 'received',
         RETURNED: 'returned',
         LOST: 'lost',
-        RETURNED_DAMAGED: 'returned_damaged'
+        RETURNED_DAMAGED: 'returned-damaged'
     }
     LENDING_ACTION_TEXT = {
-        'requested': 'Requested Tool',
-        'lent': 'Lent Tool',
-        'recieved': 'Recieved Tool',
-        'returned': 'Returned Tool',
-        'lost': 'Lost Tool',
-        'returned_damaged': 'Returned Tool Damaged'
+        'requested': _('Requested Tool'),
+        'lent': _('Lent Tool'),
+        'recieved': _('Recieved Tool'),
+        'returned': _('Returned Tool'),
+        'lost': _('Lost Tool'),
+        'returned-damaged': _('Returned Tool Damaged')
     }
     RETURN_ACTIONS = (RETURNED, RETURNED_DAMAGED,)
     NEGATIVE_RETURN_ACTIONS = (RETURNED_DAMAGED, LOST,)
@@ -44,11 +47,12 @@ class LendingAction(TimeStampedModel):
         return '%s, %s to %s' % (
             self.action_text(), self.transaction.tool, self.transaction.lendee)
 
+    @property
     def action_key(self):
         return self.LENDING_ACTIONS[self.action]
 
     def action_text(self):
-        return self.LENDING_ACTION_TEXT[self.action_key()]
+        return self.LENDING_ACTION_TEXT[self.action_key]
 
 
 class TransactionManager(models.Manager):
@@ -93,6 +97,9 @@ class Transaction(TimeStampedModel):
         return self.get_closing_action().exists()
 
     def get_closing_action(self):
-        return self.history.filter(action__in=LendingAction.CLOSING_ACTIONS)
+        return self.history.filter(
+            action__in=LendingAction.CLOSING_ACTIONS).get()
 
-    #TODO: on creation attach a new request action
+    def get_absolute_url(self):
+        return reverse('lending:transaction_progress',
+                       kwargs=dict(transaction_id=self.id))

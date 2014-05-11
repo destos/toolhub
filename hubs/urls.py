@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from . import views
 from . import backends
 
+# TODO: move login_required use here to use view mixin instead
 # namespaced under hubs:
 urlpatterns = patterns(
     '',
