@@ -367,3 +367,12 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-error'
 }
+
+# def mptt_gen():
+#     from model_mommy.mommy import make
+#     return make
+
+# # Mommy custom field generators
+# MOMMY_CUSTOM_FIELDS_GEN = {
+#     'mptt.fields.TreeForeignKey': mptt_gen
+# }

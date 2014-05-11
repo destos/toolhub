@@ -1,0 +1,38 @@
+{% extends "_layouts/base.jinja" %}
+
+{% macro display_time(time) %}
+    <time datetime="{{time}}">{{time}}</time>
+{% endmacro %}
+
+{% macro lending_history(transaction) %}
+<ul class="lending-history">
+    {% set lendee = transaction.lendee %}
+    {% set lender = transaction.lender %}
+    {% set tool = transaction.tool %}
+    {% for action in transaction.history.all() %}
+        <li class="action.action_key">
+        {% if action.action == action.REQUESTED %}
+            {{lendee}} requsted {{tool}}
+        {% elif action.action == action.LENT %}
+            {{lender}} lent {{tool.display_name}} to {{lendee}}
+        {% elif action.action == action.RECIEVED %}
+            {{lendee}} has recieved the {{tool.display_name}}
+        {% elif action.action == action.RETURNED %}
+            {{lendee}} returned the {{tool.display_name}}
+        {% elif action.action == action.LOST %}
+            {{lendee}} lost the {{tool.display_name}}
+        {% elif action.action == action.RETURNED_DAMAGED %}
+            {{lendee}} damaged the {{tool.display_name}}
+        {% endif %}
+        on {{display_time(action.created)}}
+        </li>
+    {% endfor %}
+</ul>
+{% endmacro %}
+
+{% block content %}
+<div class="col-md-12">
+{{transaction}}
+{{lending_history(transaction)}}
+</div>
+{% endblock %}
