@@ -1,12 +1,6 @@
 {% extends '_layouts/account.jinja' %}
 
-{% macro transaction_list(transactions) %}
-<ul class="list-group transaction-list">
-    {% for transaction in transactions %}
-        <li class="list-group-item transaction">{{transaction}}</li>
-    {% endfor %}
-</ul>
-{% endmacro %}
+{% from "lending/macros/history.jinja" import transaction_list %}
 
 {% block account_nav %}{{account_nav('lending')}}{% endblock %}
 

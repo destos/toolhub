@@ -6,7 +6,9 @@ from hubs.models import Hub, HubUser
 
 
 class HubMixin(object):
-    """Mixin used like a SingleObjectMixin to fetch an hub"""
+    """
+    Mixin used like a SingleObjectMixin to fetch an hub
+    """
 
     hub_model = Hub
     hub_context_name = 'hub'
@@ -29,7 +31,9 @@ class HubMixin(object):
 
 
 class HubUserMixin(HubMixin):
-    """Mixin used like a SingleObjectMixin to fetch an hub user"""
+    """
+    Mixin used like a SingleObjectMixin to fetch an hub user
+    """
 
     user_model = HubUser
     hub_user_context_name = 'hub_user'
@@ -45,7 +49,8 @@ class HubUserMixin(HubMixin):
         return kwargs
 
     def get_object(self):
-        """ Returns the HubUser object based on the primary keys for both
+        """
+        Returns the HubUser object based on the primary keys for both
         the hub and the hub user.
         """
         if hasattr(self, 'hub_user'):
@@ -59,7 +64,9 @@ class HubUserMixin(HubMixin):
 
 
 class MembershipRequiredMixin(object):
-    """This mixin presumes that authentication has already been checked"""
+    """
+    This mixin presumes that authentication has already been checked
+    """
 
     def dispatch(self, request, *args, **kwargs):
         self.request = request
@@ -74,7 +81,9 @@ class MembershipRequiredMixin(object):
 
 
 class AdminRequiredMixin(object):
-    """This mixin presumes that authentication has already been checked"""
+    """
+    This mixin presumes that authentication has already been checked
+    """
 
     def dispatch(self, request, *args, **kwargs):
         self.request = request
@@ -89,7 +98,9 @@ class AdminRequiredMixin(object):
 
 
 class OwnerRequiredMixin(object):
-    """This mixin presumes that authentication has already been checked"""
+    """
+    This mixin presumes that authentication has already been checked
+    """
 
     def dispatch(self, request, *args, **kwargs):
         self.request = request

@@ -1,7 +1,7 @@
 {% extends "hubs/hub_base.jinja" %}
 
 {% from "hubs/macros/users.jinja" import user_list %}
-
+{% from "lending/macros/history.jinja" import transaction_list %}
 {% block page_title %}{{ hub_user }} @ {{ hub }}{% endblock %}
 
 {% block hub_content %}
@@ -14,6 +14,8 @@
     <li><a href="{{ url( "hubs:user_edit", hub.slug, hub_user.user.username ) }}">Edit</a></li>
     <li><a href="{{ url( "hubs:user_delete", hub.slug, hub_user.user.username ) }}">Delete</a></li>
 </ul>
+<h3>Lending history</h3>
+{{transaction_list(history)}}
 {% if not hub_user.user.is_active %}
 <a href="{{ url('hubs:user_remind', hub.slug, hub_user.user.username ) }}">Send reminder</a>
 {% endif %}
