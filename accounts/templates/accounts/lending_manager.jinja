@@ -1,7 +1,31 @@
 {% extends '_layouts/account.jinja' %}
 
+{% macro transaction_list(transactions) %}
+<ul class="list-group transaction-list">
+    {% for transaction in transactions %}
+        <li class="list-group-item transaction">{{transaction}}</li>
+    {% endfor %}
+</ul>
+{% endmacro %}
+
 {% block account_nav %}{{account_nav('lending')}}{% endblock %}
 
 {% block content %}
 {{super()}}
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Requests inbox</h3>
+            {{transaction_list(requests)}}
+        </div>
+        <div class="col-md-4">
+            <h3>Currently lending</h3>
+            {{transaction_list(lending)}}
+        </div>
+        <div class="col-md-4">
+            <h3>Currently being lent</h3>
+            {{transaction_list(lent_to_user)}}
+        </div>
+    </div>
+</div>
 {% endblock %}

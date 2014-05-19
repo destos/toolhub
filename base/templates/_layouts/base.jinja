@@ -65,6 +65,9 @@
             <a href="#" class="dropdown-toggle">{{ user.username }} <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="{{ url('account:settings') }}">Account Settings</a></li>
+              <li><a href="{{ url('account:tool:manager') }}">Manage Tools</a></li>
+              <li><a href="{{ url('account:tool:lending') }}">Lending Status</a></li>
+              <li class="divider"></li>
               <li><a href="{{ url('hubs:user_hub_list') }}">Your Hubs</a></li>
               <li class="divider"></li>
               <li><a href="{{ url('account:logout') }}">Logout</a></li>
