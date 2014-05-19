@@ -4,7 +4,7 @@ from .models import Transaction, LendingAction
 
 
 class TransactionAdmin(admin.ModelAdmin):
-    raw_id_fields = ('hub', 'tool', 'lendee')
+    raw_id_fields = ('hub', 'tool', 'lendee', 'last_action')
 
 
 class LendingActionAdmin(admin.ModelAdmin):

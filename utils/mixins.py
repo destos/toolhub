@@ -13,5 +13,7 @@ class RestrictToUserMixin(LoginRequiredMixin):
     restrict_user_field = 'user'
 
     def get_queryset(self):
-        return super(RestrictToUserMixin, self).get_queryset().filter(**{
-            self.restrict_user_field: self.request.user})
+        self.queryset = super(
+            RestrictToUserMixin, self).get_queryset().filter(**{
+                self.restrict_user_field: self.request.user})
+        return self.queryset

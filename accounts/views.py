@@ -3,9 +3,11 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.views.generic import DetailView, TemplateView, ListView
+from django.views.generic.detail import SingleObjectMixin
 from django.utils.translation import ugettext as _
 
 from accounts import forms
+from lending.models import Transaction
 from tools.models import UserTool
 from utils.mixins import RestrictToUserMixin
 
@@ -16,8 +18,46 @@ class ToolManager(RestrictToUserMixin, ListView):
     model = UserTool
 
 
-class LendingManager(TemplateView):
+class LendingManager(RestrictToUserMixin, SingleObjectMixin, TemplateView):
     template_name = 'accounts/lending_manager.jinja'
+    restrict_user_field = 'lendee'
+    context_object_name = 'lent_to_user'
+    object = None
+
+    def get_queryset(self):
+        """
+        Filtered to only transaction requests made by user
+        by RestrictToUserMixin
+        """
+        self.queryset = Transaction.objects.active()
+        return self.queryset
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'requests': self.get_requests(),
+            'lending': self.get_lending()
+        }
+        context.update(kwargs)
+        return super(LendingManager, self).get_context_data(**context)
+
+    def get_initiating_queryset(self):
+        """
+        Transactions that have been initiated by other users related to
+        owned tools
+        """
+        return Transaction.objects.filter(tool__owner=self.request.user)
+
+    def get_requests(self):
+        """
+        Tools that others are requesting of the current user.
+        """
+        return self.get_initiating_queryset().request_open()
+
+    def get_lending(self):
+        """
+        Tools that are currently being lent from the current user.
+        """
+        return self.get_initiating_queryset().active()
 
 
 class SettingsView(account_views.SettingsView):

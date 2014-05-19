@@ -1,5 +1,6 @@
 from django.contrib.sites.models import get_current_site
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
@@ -14,6 +15,7 @@ from .forms import (
     HubForm, HubUserForm, HubUserAddForm, HubAddForm, SignUpForm)
 from .utils import create_hub
 from .backends import InvitationBackend, RegistrationBackend
+from lending.models import Transaction
 
 
 class BaseHubList(ListView):
@@ -78,6 +80,19 @@ class BaseHubUserList(HubMixin, ListView):
 
 class BaseHubUserDetail(HubUserMixin, DetailView):
     template_name = 'hubs/hubuser_detail.jinja'
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'history': self.get_lending_history()
+        }
+        context.update(kwargs)
+        return super(BaseHubUserDetail, self).get_context_data(**context)
+
+    def get_lending_history(self):
+        # filter by tool owner and lendee
+        user = self.hub_user.user
+        return Transaction.objects.filter(
+            Q(tool__owner=user) | Q(lendee=user))
 
 
 class BaseHubUserCreate(HubMixin, CreateView):
@@ -199,7 +214,6 @@ class HubCreate(BaseHubCreate):
 
 
 class HubDetail(MembershipRequiredMixin, BaseHubDetail):
-
     pass
 
 

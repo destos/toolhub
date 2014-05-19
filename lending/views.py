@@ -46,8 +46,8 @@ class StartTransationView(
             UserTool, id=self.kwargs.get('usertool_id', None))
         # Can't lend to yourself...
         if usertool.owner == self.request.user:
-            raise PermissionDenied(_("You can't lend a tool to yourself,"
-                                     " silly goose."))
+            raise PermissionDenied("You can't lend a tool to yourself,"
+                                   " silly goose.")
         return usertool
 
     def get_hub(self):
@@ -58,7 +58,7 @@ class StartTransationView(
         hub = get_object_or_404(Hub, slug=self.kwargs.get('hub_slug', None))
         # TODO: check that this tool is being shared in this hub
         if False:
-            raise PermissionDenied(_("Tool isn't available in this Hub"))
+            raise PermissionDenied("Tool isn't available in this Hub")
         return hub
 
     # TODO: make this more dry

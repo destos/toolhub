@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 # from django.db.models import Q
 
 from django_extensions.db.models import TimeStampedModel
@@ -30,10 +30,11 @@ class LendingAction(TimeStampedModel):
         'lost': _('Lost Tool'),
         'returned-damaged': _('Returned Tool Damaged')
     }
+    REQUEST_ACTIONS = (REQUESTED,)
     RETURN_ACTIONS = (RETURNED, RETURNED_DAMAGED,)
     NEGATIVE_RETURN_ACTIONS = (RETURNED_DAMAGED, LOST,)
     CLOSING_ACTIONS = (RETURNED, RETURNED_DAMAGED, LOST,)
-    ACTIVE_ACTIONS = (REQUESTED, LENT, RECIEVED,)
+    ACTIVE_ACTIONS = (LENT, RECIEVED,)
     LENDING_CHOICES = zip(LENDING_ACTIONS.keys(), LENDING_ACTIONS.values())
     transaction = models.ForeignKey(
         'Transaction',
@@ -55,13 +56,33 @@ class LendingAction(TimeStampedModel):
         return self.LENDING_ACTION_TEXT[self.action_key]
 
 
+class TransactionQueryset(models.query.QuerySet):
+    def action_group_filter(self, actions):
+        assert isinstance(actions, (list, tuple))
+        return self.filter(last_action__action__in=actions)
+
+    def request_open(self):
+        return self.action_group_filter(LendingAction.REQUEST_ACTIONS)
+
+    def closed(self):
+        return self.action_group_filter(LendingAction.CLOSING_ACTIONS)
+
+    def active(self):
+        return self.action_group_filter(LendingAction.ACTIVE_ACTIONS)
+
+
 class TransactionManager(models.Manager):
-    pass
-    # TODO: see if this is even possible to do via a query
-    # def active(self):
-    #     return self.get_query_set().filter(
-    #         history__action__in=LendingAction.ACTIVE_ACTIONS).latest(
-    #             'history__created')
+    def get_query_set(self):
+        return TransactionQueryset(self.model, using=self._db)
+
+    def request_open(self):
+        return self.get_query_set().request_open()
+
+    def closed(self):
+        return self.get_query_set().closed()
+
+    def active(self):
+        return self.get_query_set().active()
 
 
 # TODO, adding a new action changes modified date
@@ -78,6 +99,8 @@ class Transaction(TimeStampedModel):
         related_name='lending_transactions',
         blank=False, null=False, default=None)
     lendee = models.ForeignKey(User, blank=False, null=False)
+    last_action = models.ForeignKey(
+        LendingAction, blank=True, null=True, related_name='latest_action')
 
     objects = TransactionManager()
 
