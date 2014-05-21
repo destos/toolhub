@@ -14,6 +14,7 @@ urlpatterns = patterns(
     url(r'^tools/', include('tools.urls', namespace='tools')),
     url(r'^hubs/', include('hubs.urls', namespace='hubs')),
     url(r'^lending/', include('lending.urls', namespace='lending')),
+    url(r'^robots\.txt$', include('robots.urls')),
     url(r'', include('base.urls', namespace='base')),
 )
 

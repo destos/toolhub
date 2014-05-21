@@ -69,6 +69,7 @@ INSTALLED_APPS = (
     'password_reset',
     'crispy_forms',
     'braces',
+    'robots',
 
     # Database migrations
     'south',
@@ -131,6 +132,7 @@ STATICFILES_DIRS = (
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
+LANGUAGE_CODE = 'en-us'
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale
@@ -376,3 +378,6 @@ MESSAGE_TAGS = {
 # MOMMY_CUSTOM_FIELDS_GEN = {
 #     'mptt.fields.TreeForeignKey': mptt_gen
 # }
+
+# robots app
+ROBOTS_CACHE_TIMEOUT = 60*60*24

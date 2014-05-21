@@ -46,6 +46,7 @@ django-crispy-forms==1.4.0
 django-jinja==0.23.1
 django-sslify==0.2.3
 django-braces==1.4.0
+django-robots==1.0
 
 # heroku requirements
 # dj-database-url==0.3.0
