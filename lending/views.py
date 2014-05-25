@@ -20,8 +20,8 @@ from .utils import new_lending_action
 # user is a part of
 # TODO: check for tool currently being lent
 # Also check they you currently aren't attempting to lend this same tool
-# ( exsiting request transation that hasn't been approved)
-class StartTransationView(
+# ( exsiting request Transaction that hasn't been approved)
+class StartTransactionView(
         LoginRequiredMixin,
         HubMembershipRequiredMixin,
         CreateView):
@@ -37,7 +37,7 @@ class StartTransationView(
         try:
             self.usertool = self.get_usertool()
             return super(
-                StartTransationView, self).dispatch(request, *args, **kwargs)
+                StartTransactionView, self).dispatch(request, *args, **kwargs)
         except PermissionDenied, e:
             return HttpResponseForbidden(str(e))
 
@@ -63,7 +63,7 @@ class StartTransationView(
 
     # TODO: make this more dry
     def get_form_kwargs(self):
-        kwargs = super(StartTransationView, self).get_form_kwargs()
+        kwargs = super(StartTransactionView, self).get_form_kwargs()
         kwargs.update({
             'hub_slug': self.kwargs.get('hub_slug', None),
             'usertool_id': self.kwargs.get('usertool_id', None)
@@ -71,7 +71,7 @@ class StartTransationView(
         return kwargs
 
     def get_context_data(self, **kwargs):
-        context = super(StartTransationView, self).get_context_data(**kwargs)
+        context = super(StartTransactionView, self).get_context_data(**kwargs)
         context['hub'] = self.hub
         context['usertool'] = self.usertool
         return context
@@ -87,7 +87,7 @@ class StartTransationView(
         self.object.save()
         # initial request action
         new_lending_action(transaction=self.object)
-        return super(StartTransationView, self).form_valid(form)
+        return super(StartTransactionView, self).form_valid(form)
 
 
 class TransactionProgressView(
