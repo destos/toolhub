@@ -21,6 +21,8 @@ mptt_urls_tool_settings = {
 urlpatterns = patterns(
     '',
     url(r'^$', views.ToolList.as_view(), name='list'),
+    url(r'^add/$', views.CreateUserTool.as_view(), name='create'),
+    url(r'^add/type/$', views.SuggestTool.as_view(), name='suggest'),
     url(r'^(?P<tool_slug>[-_\w]+)/$',
         views.ToolDetailView.as_view(), name='detail'),
     # capturing pattern, place new urls above this

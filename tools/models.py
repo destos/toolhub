@@ -65,6 +65,9 @@ class ToolQuerySet(models.query.QuerySet):
         children.append(tool_class.id)
         return self.filter(parent__in=children)
 
+    def published(self):
+        return self.filter(published=True)
+
 
 class ToolManager(models.Manager):
     def get_query_set(self):
@@ -72,7 +75,7 @@ class ToolManager(models.Manager):
 
     # TODO: create published model property
     def published(self):
-        return self.get_query_set()
+        return self.get_query_set().published()
 
     def children_tools(self, tool_class):
         return self.get_query_set().children_tools(tool_class)
@@ -96,6 +99,10 @@ class Tool(models.Model):
     # TODO: convert these to localized fields
     value = models.FloatField(default=3.50, help_text='monetary value')
     weight = models.FloatField(default=0.0, help_text='weight in grams')
+    published = models.BooleanField(default=False)
+    creator = models.ForeignKey(
+        User, blank=True, null=True, default=None,
+        related_name='suggested_tools')
 
     objects = ToolManager()
 
@@ -111,9 +118,9 @@ class UserTool(models.Model):
     # Does the user have a nickname for the tool?
     callsign = models.CharField(
         max_length=255, blank=True, null=True,
-        help_text=_('your nickname of the tool'))
+        help_text=_('your nickname for the tool'))
     tool_type = models.ForeignKey(
-        Tool, related_name='user_tools', blank=False, null=False, default=None)
+        Tool, related_name='user_tools', blank=True, null=False, default=None)
     owner = models.ForeignKey(
         User, blank=False, null=False, default=None, related_name='tools')
     # instructions = models.ForeignKey('UserToolInstructions', blank=True)
@@ -127,7 +134,9 @@ class UserTool(models.Model):
         (PICKUP, _('can pickup')), (DROP_OFF, _('dropped off')),
         (ON_LOCATION, _('can use on premisis')))
     portability = models.IntegerField(
-        choices=PORT_CHOICES, default=PICKUP)
+        choices=PORT_CHOICES,
+        default=PICKUP,
+        help_text=_('where the tool can be used'))
 
     def __unicode__(self):
         return u"%s's %s" % (self.owner, self.display_name,)

@@ -6,7 +6,7 @@ from . import views
 urlpatterns = patterns(
     '',
     url(r'^new/(?P<hub_slug>[-_\w]+)/(?P<usertool_id>\d+)/$',
-        views.StartTransationView.as_view(),
+        views.StartTransactionView.as_view(),
         name='new_transaction'),
     url(r'^progress/(?P<transaction_id>\d+)/$',
         views.TransactionProgressView.as_view(),
