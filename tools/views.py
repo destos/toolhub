@@ -1,23 +1,65 @@
-from django.views.generic import TemplateView, ListView
-from tools.models import Tool
+from braces.views import LoginRequiredMixin, FormValidMessageMixin
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
+from django.views.generic import CreateView, TemplateView, ListView
 
 
-# abstract the object retrieval?
-class MPTTUrlMixin(object):
-    mptt_context_object_name = 'mptt_object'
-
-    def dispatch(self, request, *args, **kwargs):
-        """get passed in mptt_urls object which is the leaf node"""
-        self.mptt_object = kwargs.pop('mptt_urls', {}).get('object', None)
-        return super(MPTTUrlMixin, self).dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, object=None):
-        context = super(MPTTUrlMixin, self).get_context_data()
-        context[self.mptt_context_object_name] = self.mptt_object
-        return context
+from utils.mixins import MPTTUrlMixin
+from tools.models import Tool, UserTool
+from .forms import CreateUserToolForm, SuggestToolForm
 
 
-class ToolList(MPTTUrlMixin, ListView):
+class CreateUserTool(
+        LoginRequiredMixin,
+        FormValidMessageMixin,
+        CreateView):
+    """
+    Allows user to create a new user tool
+    """
+    template_name = 'tools/usertool_create.jinja'
+    model = UserTool
+    form_class = CreateUserToolForm
+    form_valid_message = _("Succefully added tool to your library.")
+
+    def get_success_url(self):
+        return reverse('account:tool:manager')
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.owner = self.request.user
+        self.object.save()
+        return super(CreateUserTool, self).form_valid(form)
+
+
+class SuggestTool(
+        LoginRequiredMixin,
+        FormValidMessageMixin,
+        CreateView):
+    """
+    Allows users to suggest new tool types
+    """
+    template_name = 'tools/tool_suggest.jinja'
+    model = Tool
+    form_class = SuggestToolForm
+    form_valid_message = _("""
+        Thanks for suggesting a new tool type! We'll take it from here!""")
+
+    def get_success_url(self):
+        return reverse('account:tool:manager')
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.creator = self.request.user
+        assert self.object.published is False
+        return super(SuggestTool, self).form_valid(form)
+
+
+class ToolList(
+        MPTTUrlMixin,
+        ListView):
+    """
+    A filterable list of tools
+    """
     template_name = 'tools/tool_list.jinja'
     queryset = Tool.objects.published()
     context_object_name = 'tool_list'
@@ -33,7 +75,9 @@ class ToolList(MPTTUrlMixin, ListView):
             return qs
 
 
-class ToolDetailView(MPTTUrlMixin, TemplateView):
+class ToolDetailView(
+        MPTTUrlMixin,
+        TemplateView):
     template_name = 'tools/tool_detail.jinja'
     mptt_context_object_name = 'tool'
 
