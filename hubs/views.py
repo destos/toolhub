@@ -16,6 +16,7 @@ from .forms import (
 from .utils import create_hub
 from .backends import InvitationBackend, RegistrationBackend
 from lending.models import Transaction
+from toolhub.mixins import LoginRequiredMixin
 
 
 class BaseHubList(ListView):
@@ -191,7 +192,7 @@ class HubList(BaseHubList):
     pass
 
 
-class UserHubList(BaseHubList):
+class UserHubList(LoginRequiredMixin, BaseHubList):
     """
     Show only enabled hubs that user is a member of
     """
@@ -206,44 +207,47 @@ class UserHubList(BaseHubList):
             UserHubList, self).get_queryset().enabled().get_for_user(user)
 
 
-class HubCreate(BaseHubCreate):
+class HubCreate(LoginRequiredMixin, BaseHubCreate):
     """
     Allows any user to create a new hub.
     """
     pass
 
 
-class HubDetail(MembershipRequiredMixin, BaseHubDetail):
+class HubDetail(LoginRequiredMixin, MembershipRequiredMixin, BaseHubDetail):
     pass
 
 
-class HubUpdate(AdminRequiredMixin, BaseHubUpdate):
+class HubUpdate(LoginRequiredMixin, AdminRequiredMixin, BaseHubUpdate):
     pass
 
 
-class HubDelete(OwnerRequiredMixin, BaseHubDelete):
+class HubDelete(LoginRequiredMixin, OwnerRequiredMixin, BaseHubDelete):
     pass
 
 
-class HubUserList(MembershipRequiredMixin, BaseHubUserList):
+class HubUserList(LoginRequiredMixin, MembershipRequiredMixin, BaseHubUserList):
     pass
 
 
-class HubUserDetail(AdminRequiredMixin, BaseHubUserDetail):
+class HubUserDetail(LoginRequiredMixin, AdminRequiredMixin, BaseHubUserDetail):
     pass
 
 
-class HubUserUpdate(AdminRequiredMixin, BaseHubUserUpdate):
+class HubUserUpdate(LoginRequiredMixin, AdminRequiredMixin, BaseHubUserUpdate):
     pass
 
 
-class HubUserCreate(AdminRequiredMixin, BaseHubUserCreate):
+class HubUserCreate(LoginRequiredMixin, AdminRequiredMixin, BaseHubUserCreate):
     pass
 
 
-class HubUserRemind(AdminRequiredMixin, BaseHubUserRemind):
+class HubUserRemind(LoginRequiredMixin, AdminRequiredMixin, BaseHubUserRemind):
     pass
 
 
-class HubUserDelete(AdminRequiredMixin, BaseHubUserDelete):
+class HubUserDelete(LoginRequiredMixin, AdminRequiredMixin, BaseHubUserDelete):
+    pass
+
+
     pass

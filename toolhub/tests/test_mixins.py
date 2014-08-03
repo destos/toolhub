@@ -5,7 +5,7 @@ from django.views.generic.detail import SingleObjectMixin
 from model_mommy import mommy
 import mox
 
-from utils.mixins import RestrictToUserMixin
+from toolhub.mixins import RestrictToUserMixin
 
 
 class NewView(RestrictToUserMixin, SingleObjectMixin, View):
