@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 from accounts import forms
 from lending.models import Transaction
 from tools.models import UserTool
-from utils.mixins import RestrictToUserMixin
+from toolhub.mixins import RestrictToUserMixin
 
 
 class ToolManager(RestrictToUserMixin, ListView):
@@ -85,6 +85,7 @@ class SettingsView(account_views.SettingsView):
 class LoginView(account_views.LoginView):
     template_name = 'accounts/login.jinja'
     form_class = forms.LoginUsernameForm
+    redirect_field_name = 'return'
 
 
 class LogoutView(account_views.LogoutView):

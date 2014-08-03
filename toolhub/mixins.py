@@ -1,4 +1,6 @@
-from braces.views import LoginRequiredMixin
+from django.core.urlresolvers import reverse_lazy
+from braces.views import LoginRequiredMixin as BracesLoginRequiredMixin
+from braces.views import *
 
 
 # abstract the object retrieval?
@@ -14,6 +16,11 @@ class MPTTUrlMixin(object):
         context = super(MPTTUrlMixin, self).get_context_data()
         context[self.mptt_context_object_name] = self.mptt_object
         return context
+
+
+class LoginRequiredMixin(BracesLoginRequiredMixin):
+    login_url = reverse_lazy("account:login")
+    redirect_field_name = "return"
 
 
 class RestrictToUserMixin(LoginRequiredMixin):
