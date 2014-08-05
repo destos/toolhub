@@ -1,12 +1,13 @@
-from braces.views import LoginRequiredMixin, FormValidMessageMixin
 from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import CreateView, TemplateView, ListView
+from django.views.generic import CreateView, DetailView, ListView
 
 
-from utils.mixins import MPTTUrlMixin
-from tools.models import Tool, UserTool
+# from toolhub.mixins import MPTTUrlMixin
+from tools.models import Tool, ToolClassification, UserTool
 from .forms import CreateUserToolForm, SuggestToolForm
+from toolhub.mixins import LoginRequiredMixin, FormValidMessageMixin
 
 
 class CreateUserTool(
@@ -54,35 +55,43 @@ class SuggestTool(
         return super(SuggestTool, self).form_valid(form)
 
 
-class ToolList(
-        MPTTUrlMixin,
-        ListView):
-    """
-    A filterable list of tools
-    """
+class BaseToolList(ListView):
     template_name = 'tools/tool_list.jinja'
     queryset = Tool.objects.published()
     context_object_name = 'tool_list'
-    mptt_context_object_name = 'tool_class'
-    paginate_by = 30
+    paginate_by = 6
+
+
+class ToolList(BaseToolList):
+    """
+    A filterable list of tools by classification
+    """
+    tool_class = None
+
+    def dispatch(self, request, *args, **kwargs):
+        tool_class_slug = kwargs.pop('tool_class_slug', None)
+        if tool_class_slug:
+            self.tool_class = get_object_or_404(
+                ToolClassification, slug=tool_class_slug)
+
+        return super(ToolList, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, object=None):
+        context = super(ToolList, self).get_context_data()
+        context['tool_class'] = self.tool_class
+        return context
 
     def get_queryset(self):
         qs = super(ToolList, self).get_queryset()
-        if self.mptt_object:
+        if self.tool_class:
             #TODO: show all tools that are inside a category and it's decendants
-            return qs.children_tools(self.mptt_object)
+            return qs.children_tools(self.tool_class)
         else:
             return qs
 
 
-class ToolDetailView(
-        MPTTUrlMixin,
-        TemplateView):
+class ToolDetailView(DetailView):
     template_name = 'tools/tool_detail.jinja'
-    mptt_context_object_name = 'tool'
-
-    def get_object(self):
-        if self.mptt_object:
-            return self.mptt_object
-        else:
-            return super(ToolDetailView, self).get_object()
+    model = Tool
+    slug_url_kwarg = 'tool_slug'
+    context_object_name = 'tool'

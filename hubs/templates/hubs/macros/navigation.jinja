@@ -1,5 +1,6 @@
 {% macro breadcrumbs(hub=false, hub_user=false, tail=false) %}
 <ol class="breadcrumb">
+    <!-- TODO: change to "hub" and it goes back to the current hub detail -->
     <li><a href="{{ url('hubs:list') }}">hubs</a></li>
     {% if hub %}
         <li><a href="{{ url('hubs:detail', hub.slug) }}">{{hub}}</a></li>

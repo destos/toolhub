@@ -1,0 +1,5 @@
+{% macro canonical(url) %}
+    {%- if url -%}
+        <link rel="canonical" href="{{url}}">
+    {%- endif -%}
+{% endmacro %}

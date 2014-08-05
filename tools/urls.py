@@ -1,5 +1,5 @@
 from django.conf.urls import url, patterns
-from mptt_urls import url_mptt
+# from mptt_urls import url_mptt
 
 from tools import views
 
@@ -17,7 +17,7 @@ mptt_urls_tool_settings = {
     }
 }
 
-# namespaced under hubs:
+# namespaced under tools:
 urlpatterns = patterns(
     '',
     url(r'^$', views.ToolList.as_view(), name='list'),
@@ -25,8 +25,14 @@ urlpatterns = patterns(
     url(r'^add/type/$', views.SuggestTool.as_view(), name='suggest'),
     url(r'^(?P<tool_slug>[-_\w]+)/$',
         views.ToolDetailView.as_view(), name='detail'),
-    # capturing pattern, place new urls above this
-    url_mptt(r'^(?P<url>.*)',
-             settings=mptt_urls_tool_settings,
-             name='list_class'),
+    url(r'^category/(?P<tool_class_slug>[-_\w]+)/$',
+        views.ToolList.as_view(), name='list_class')
+   # (?P<class_id>\d+)/$
 )
+
+# tool_list_patterns = patterns(
+#     # capturing pattern, place new urls above this
+#     url_mptt(r'^(?P<url>.*)',
+#              settings=mptt_urls_tool_settings,
+#              name='list_class')
+# )

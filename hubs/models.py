@@ -185,7 +185,9 @@ class HubUser(TimeStampedModel):
     @property
     def name(self):
         if hasattr(self.user, 'get_full_name'):
-            return self.user.get_full_name()
+            name = self.user.get_full_name()
+            if name:
+                return name
 
         return "%s" % self.user
 

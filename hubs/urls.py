@@ -44,4 +44,9 @@ urlpatterns = patterns(
         name="user_delete"),
     url(r'^invite/', include(backends.InvitationBackend().get_urls())),
     url(r'^register/', include(backends.RegistrationBackend().get_urls())),
+
+    # Hub tools
+    url(r'^(?P<hub_slug>[-_\w]+)/tools/$',
+        view=views.HubToolList.as_view(),
+        name="tool_list"),
 )
