@@ -1,0 +1,40 @@
+{# accepts navication lists like such, breadcumbs([('index.html', 'Index'), ('about.html', 'About')]) #}
+{% macro breadcrumb_list(items) %}
+<ol class="breadcrumb">
+    {% for link, name in items -%}
+        {%- if link -%}
+            <li><a href="{{link}}">{{name}}</a></li>
+        {%- else -%}
+            <li>{{name}}</li>
+        {%- endif %}
+    {%- endfor %}
+</ol>
+{% endmacro %}
+
+{% macro pagination(is_paginated, paginator, page_obj) %}
+{% if is_paginated %}
+    <ul class="pagination">
+    {% if page_obj.has_previous() %}
+        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+        <li class="disabled"><a href="#" onclick="javascript: return false;">&laquo;</a></li>
+    {% endif %}
+    {% for page in paginator.page_range %}
+        {% if page %}
+            {% if page == page_obj.number %}
+        <li class="active"><a href="#" onclick="javascript: return false;">{{ page }}</a></li>
+            {% else %}
+        <li><a href="?page={{ page }}">{{ page }}</a></li>
+            {% endif %}
+        {% else %}
+        <li class="disabled"><a href="#" onclick="javascript: return false;">...</a></li>
+        {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next() %}
+        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+    {% else %}
+        <li class="disabled"><a href="#" onclick="javascript: return false;">&raquo;</a></li>
+    {% endif %}
+    </ul>
+{% endif %}
+{% endmacro %}

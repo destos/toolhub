@@ -17,6 +17,8 @@ from .utils import create_hub
 from .backends import InvitationBackend, RegistrationBackend
 from lending.models import Transaction
 from toolhub.mixins import LoginRequiredMixin
+from tools.views import BaseToolList
+from tools.models import Tool
 
 
 class BaseHubList(ListView):
@@ -150,6 +152,16 @@ class BaseHubUserDelete(HubUserMixin, DeleteView):
                        kwargs={'hub_slug': self.object.hub.slug})
 
 
+class BaseHubToolList(
+        HubMixin,
+        BaseToolList):
+    template_name = 'hubs/hub_tool_list.jinja'
+
+    def get_queryset(self):
+        qs = super(BaseHubToolList, self).get_queryset()
+        return qs.tools_from_users(self.hub.users.all())
+
+
 class HubSignup(FormView):
     """
     View that allows unregistered users to create an hub account.
@@ -250,4 +262,5 @@ class HubUserDelete(LoginRequiredMixin, AdminRequiredMixin, BaseHubUserDelete):
     pass
 
 
+class HubToolList(LoginRequiredMixin, MembershipRequiredMixin, BaseHubToolList):
     pass

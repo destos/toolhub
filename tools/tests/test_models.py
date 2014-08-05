@@ -1,9 +1,13 @@
+from django.conf import settings
 from django.test import TestCase
 from model_mommy import mommy
 import mox
 
 from test_app.utils import models_to_query
 from tools import models
+
+
+USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 
 class ToolClassificationManagerTest(TestCase):
@@ -51,6 +55,25 @@ class ToolQuerySetTest(TestCase):
         query = self.qs.children_tools(mid2)
         self.assertQuerysetEqual(
             query, models_to_query(mid2_tool), ordered=False)
+
+    def test_tools_from_users(self):
+        user = mommy.make(USER_MODEL)
+        another_user = mommy.make(USER_MODEL)
+
+        tool_class = mommy.make(models.ToolClassification)
+        tool = mommy.make(models.Tool, parent=tool_class)
+        another_tool = mommy.make(models.Tool, parent=tool_class)
+        mommy.make(models.UserTool, owner=user, tool_type=tool)
+        mommy.make(models.UserTool, owner=another_user, tool_type=another_tool)
+        mommy.make(models.UserTool, owner=another_user, tool_type=another_tool)
+        mommy.make(models.UserTool, owner=another_user, tool_type=tool)
+
+        query = self.qs.tools_from_users([user])
+        self.assertQuerysetEqual(
+            query, models_to_query(tool), ordered=False)
+
+    def test_published(self):
+        pass
 
 
 class ToolManagerTest(TestCase):

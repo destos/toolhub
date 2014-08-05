@@ -2,25 +2,26 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.views.generic import CreateView, DetailView
-from django.utils.translation import ugettext_lazy as _
-
-from braces.views import (
-    LoginRequiredMixin, PrefetchRelatedMixin, SelectRelatedMixin,
-    UserPassesTestMixin)
+# from django.utils.translation import ugettext_lazy as _
+from braces.views import StaffuserRequiredMixin
 
 from hubs.mixins import MembershipRequiredMixin as HubMembershipRequiredMixin
 from hubs.models import Hub
 from tools.models import UserTool
-from . import forms
-from . import models
-from .utils import new_lending_action
+from lending import forms
+from lending import models
+from lending.utils import new_lending_action
+from toolhub.mixins import (
+    PrefetchRelatedMixin, SelectRelatedMixin, UserPassesTestMixin,
+    LoginRequiredMixin)
 
 
 # TODO, check if requested tool is publicly available or available in hub
 # user is a part of
 # TODO: check for tool currently being lent
+# TOOD: use HubMixing from hub app for get_hub?
 # Also check they you currently aren't attempting to lend this same tool
-# ( exsiting request Transaction that hasn't been approved)
+# ( exsiting request Transaction that hasn't been approved )
 class StartTransactionView(
         LoginRequiredMixin,
         HubMembershipRequiredMixin,
@@ -114,3 +115,10 @@ class TransactionProgressView(
         """
         self.object = self.get_object()
         return (self.object.lender == user or self.object.lendee == user)
+
+
+
+class TransactionProgressAdminView(
+        StaffuserRequiredMixin,
+        TransactionProgressView):
+    pass

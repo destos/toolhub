@@ -1,22 +1,14 @@
-{% extends "_layouts/base.jinja" %}
+{% extends "hubs/hub_base.jinja" %}
 
 {% from "tools/macros/navigation.jinja" import breadcrumbs %}
 {% from "macros/navigation.jinja" import pagination %}
 {% from "tools/macros/display.jinja" import inline_tool %}
-{% from "macros/meta.jinja" import canonical %}
 
-{% block meta %}
-{{super()}}
-{%- if tool_class and is_paginated and page_obj.number >= 1 -%}
-    {{- canonical( url('tools:list_class', tool_class_slug=tool_class.slug) ) }}
-{%- endif -%}
-{% endblock %}
-
-{% block content %}
-<div class="col-md-12">
-    <h1>{{tool_class}}</h1>
+{% block breadcrumbs scoped -%}
     {{ breadcrumbs(tool_class) }}
-</div>
+{%- endblock %}
+
+{% block hub_content %}
 {% for tool in tool_list %}
     {{inline_tool(tool)}}
 {% endfor %}

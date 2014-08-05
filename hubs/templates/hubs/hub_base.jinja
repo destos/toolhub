@@ -4,10 +4,42 @@
 
 {% block content %}
 <div class="col-md-12">
-    <h1>{% block page_title %}Tool Hubs{% endblock %}</h1>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                {% if hub %}
+                <a class="navbar-brand" href="{{ hub.get_absolute_url() }}">{{hub}}</a>
+                {% else %}
+                <a class="navbar-brand" href="#">{% block page_title %}Tool Hubs{% endblock %}</a>
+                {% endif %}
+            </div>
+            {% if hub %}
+                <ui class="nav navbar-nav">
+                {% block left_navbar %}
+                    <li><a href="{{ url('hubs:tool_list', hub.slug) }}">Tools</a></li>
+                    <li><a href="{{ url('hubs:user_list', hub.slug) }}">Members</a></li>
+                {% endblock %}
+                </ui>
+                <ul class="nav navbar-nav navbar-right">
+                {% block right_navbar %}
+                    {% if hub.is_admin(user) %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">admin <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url( "hubs:edit", hub.slug ) }}">Edit</a></li>
+                            <li><a href="{{ url( "hubs:user_add", hub.slug ) }}">Invite a member</a></li>
+                            <li><a href="{{ url( "hubs:delete", hub.slug ) }}">Delete</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                {% endblock %}
+                </ul>
+            {% endif %}
+        </div>
+    </nav>
     {% block breadcrumbs -%}
-        {{ breadcrumbs(hub, hub_user) }}
+        {# {{ breadcrumbs(hub, hub_user) }} #}
     {%- endblock %}
-    {% block hub_content %}{% endblock %}
 </div>
+{% block hub_content %}{% endblock %}
 {% endblock %}

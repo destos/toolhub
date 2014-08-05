@@ -1,14 +1,16 @@
-{% extends "_layouts/base.jinja" %}
+{% extends "hubs/hub_base.jinja" %}
 
 {% from "hubs/macros/users.jinja" import user_list %}
+{% from "macros/navigation.jinja" import breadcrumb_list %}
 
-{% block content %}
+{% block breadcrumbs %}
+{{ breadcrumb_list([
+        ( url('hubs:detail', hub.slug), 'hub' ),
+        ( false, 'members' )
+    ])
+}}
+{% endblock %}
 
-<h1>{{ hub }}'s Members</h1>
-<ul>
-    <li><a href="{{ url( "hubs:user_add", hub.slug) }}">Add a member</a></li>
-</ul>
-
+{% block hub_content %}
 {{ user_list(hub) }}
-
 {% endblock %}

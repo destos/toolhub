@@ -2,13 +2,8 @@
 
 {% from "hubs/macros/users.jinja" import user_list %}
 
-{% block page_title %}{{ hub }}{% endblock %}
-{% block hub_content %}
-<ul>
-    <li><a href="{{ url( "hubs:edit", hub.slug ) }}">Edit</a></li>
-    <li><a href="{{ url( "hubs:delete", hub.slug ) }}">Delete</a></li>
-    <li><a href="{{ url( "hubs:user_add", hub.slug ) }}">Add a member</a></li>
-</ul>
+{# {% block page_title %}{{ hub }}{% endblock %} #}
 
+{% block hub_content %}
 {{ user_list(hub) }}
 {% endblock %}

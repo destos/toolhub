@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
@@ -50,7 +51,9 @@ class ToolClassification(MPTTModel):
     def get_list_url(self):
         pass
 
-    # get_absolute_url overwritten by mptt_urls
+    def get_absolute_url(self):
+        return reverse('tools:list_class',
+                       kwargs=dict(tool_class_slug=self.slug))
 
 
 class ToolQuerySet(models.query.QuerySet):
@@ -65,6 +68,9 @@ class ToolQuerySet(models.query.QuerySet):
         children.append(tool_class.id)
         return self.filter(parent__in=children)
 
+    def tools_from_users(self, users):
+        return self.filter(user_tools__owner__in=users)
+
     def published(self):
         return self.filter(published=True)
 
@@ -73,9 +79,11 @@ class ToolManager(models.Manager):
     def get_query_set(self):
         return ToolQuerySet(self.model, using=self._db)
 
-    # TODO: create published model property
     def published(self):
         return self.get_query_set().published()
+
+    def tools_from_users(self, users):
+        return self.get_query_set().tools_from_users(users)
 
     def children_tools(self, tool_class):
         return self.get_query_set().children_tools(tool_class)
@@ -112,6 +120,10 @@ class Tool(models.Model):
     def main_class(self):
         # TODO: do this mo-better
         return self.parent
+
+    def get_absolute_url(self):
+        return reverse('tools:detail',
+                       kwargs=dict(tool_slug=self.slug))
 
 
 class UserTool(models.Model):
