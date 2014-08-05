@@ -91,7 +91,7 @@ class LoginView(account_views.LoginView):
 class LogoutView(account_views.LogoutView):
 
     def get_redirect_url(self):
-        return reverse('base:home')
+        return reverse('homepage')
 
     # use the default post functionality, which is to logout and redirect
     def get(self, *args, **kwargs):

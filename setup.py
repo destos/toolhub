@@ -23,8 +23,8 @@ setup(name='django-toolhub',
       #license='',
       packages=[
           # TODO: add all packages
-          'toolhub', 'toolhub.settings', 'tools', 'tools.migrations', 'hubs',
-          'hubs.migrations', 'hubs.backends', 'base', 'base.templatetags',
+          'toolhub', 'toolhub.settings', 'base.templatetags', 'tools',
+          'tools.migrations', 'hubs', 'hubs.migrations', 'hubs.backends',
           'accounts'],
       install_requires=[
           'South',

@@ -5,4 +5,4 @@ static
 local.py
 local.pyc
 node_modules
-base/static/bower
+toolhub/static/bower

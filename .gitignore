@@ -24,6 +24,6 @@ test_db/
 media/*
 static/*
 staticfiles/*
-base/static/bower*
+toolhub/static/bower*
 .anvil/
 .tox

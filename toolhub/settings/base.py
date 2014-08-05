@@ -76,7 +76,7 @@ INSTALLED_APPS = (
 
     # local applications
     'accounts',
-    'base',
+    'toolhub',
     'tools',  # tool models and views
     'hubs',
     'lending',

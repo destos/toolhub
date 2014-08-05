@@ -4,6 +4,8 @@ from django.conf import settings
 from django.conf.urls import include, patterns, url
 from django.contrib import admin
 
+from .views import Homepage
+
 
 admin.autodiscover()
 
@@ -15,7 +17,7 @@ urlpatterns = patterns(
     url(r'^hubs/', include('hubs.urls', namespace='hubs')),
     url(r'^lending/', include('lending.urls', namespace='lending')),
     url(r'^robots\.txt$', include('robots.urls')),
-    url(r'', include('base.urls', namespace='base')),
+    url(r'^$', Homepage.as_view(), name='home')
 )
 
 if settings.DEBUG:
