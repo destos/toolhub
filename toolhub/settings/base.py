@@ -47,11 +47,11 @@ ROOT_URLCONF = 'toolhub.urls'
 # Application definition
 INSTALLED_APPS = (
     # Django contrib apps
+    'django.contrib.admin.apps.AdminConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.admin',
     'django.contrib.humanize',
     'django.contrib.syndication',
     'django.contrib.sites',
@@ -59,20 +59,21 @@ INSTALLED_APPS = (
 
     # Third-party apps, patches, fixes
     'account',
-    'compressor',
     'django_extensions',
     'django_jinja',
+    'django_nyt',
     'djcelery',
     'mptt',
-    'mptt_urls',
     'class_based_auth_views',
     'password_reset',
     'crispy_forms',
     'braces',
     'robots',
+    'waffle',
+    'reversion',
 
     # Database migrations
-    'south',
+    # 'south',
 
     # local applications
     'accounts',
@@ -153,7 +154,6 @@ TIME_ZONE = 'America/Los_Angeles'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
 )
 
 MIDDLEWARE_CLASSES = [
@@ -166,6 +166,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "account.middleware.LocaleMiddleware",
     "account.middleware.TimezoneMiddleware",
+    "waffle.middleware.WaffleMiddleware"
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = [
@@ -202,8 +203,11 @@ DEFAULT_JINJA2_TEMPLATE_EXTENSION = '.jinja'
 JINJA2_AUTOESCAPE = True
 JINJA2_EXTENSIONS = [
     'jinja2.ext.i18n',
-    'compressor.contrib.jinja2ext.CompressorExtension'  # compressor fix
 ]
+JINJA2_ENVIRONMENT_OPTIONS = {
+    'cache_size': 0,
+}
+
 
 #crispt_forms
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -240,6 +244,7 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.logging.LoggingPanel',
     'debug_toolbar.panels.redirects.RedirectsPanel',
 )
+
 
 #account
 ACCOUNT_HOOKSET = 'accounts.hooks.AccountHookSet'
@@ -381,3 +386,8 @@ MESSAGE_TAGS = {
 
 # robots app
 ROBOTS_CACHE_TIMEOUT = 60*60*24
+
+# Waffle app
+WAFFLE_FLAG_DEFAULT = False
+WAFFLE_SWITCH_DEFAULT = False
+WAFFLE_SAMPLE_DEFAULT = False
