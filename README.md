@@ -18,6 +18,19 @@ Describe your project here.
 
 Fill out with installation instructions for your project.
 
+## Uses ##
+
+django-nyt
+django-reversion
+django-waffle
+django-robots
+django-braces
+django-sslify
+django-taggit
+django-extensions
+django-crispy-forms
+django-celery
+django-mptt
 
 License
 -------

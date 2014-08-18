@@ -39,7 +39,7 @@ django-waffle
 django-mptt==0.6.0
 #django-mptt-urls==1.0.1
 #git+git://github.com/MrKesn/django-mptt-urls.git#egg=django-mptt-urls
-django-extensions==1.3.3
+django-extensions==1.3.10
 django-taggit==0.11.2
 django-user-accounts==1.0c9
 django-crispy-forms==1.4.0

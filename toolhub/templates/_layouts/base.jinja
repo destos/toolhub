@@ -64,10 +64,12 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{ url('account:settings') }}">Account Settings</a></li>
                             <li><a href="{{ url('account:tool:manager') }}">Manage Tools</a></li>
+                            {% if waffle.flag('enable_hubs') %}
                             <li><a href="{{ url('account:tool:lending') }}">Lending Status</a></li>
                             <li class="divider"></li>
                             <li><a href="{{ url('hubs:user_hub_list') }}">Your Hubs</a></li>
                             <li class="divider"></li>
+                            {% endif %}
                             <li><a href="{{ url('account:logout') }}">Logout</a></li>
                         </ul>
                     </li>
@@ -81,7 +83,13 @@
     </nav>
 
     <header>
-        {% block header %}{% endblock %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+{% block header %}{% endblock %}
+                </div>
+            </div>
+        </div>
     </header>
 
     <div role="main">

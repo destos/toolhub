@@ -47,7 +47,7 @@ ROOT_URLCONF = 'toolhub.urls'
 # Application definition
 INSTALLED_APPS = (
     # Django contrib apps
-    'django.contrib.admin.apps.AdminConfig',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -157,6 +157,7 @@ STATICFILES_FINDERS = (
 )
 
 MIDDLEWARE_CLASSES = [
+    # 'sslify.middleware.SSLifyMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',

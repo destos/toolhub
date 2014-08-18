@@ -2,10 +2,15 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
+from toolhub.mixins import WaffleRequired
 from hubs.models import Hub, HubUser
 
 
-class HubMixin(object):
+class HubAccessMixin(WaffleRequired):
+    waffle_flags = ['enable_hubs']
+
+
+class HubMixin(HubAccessMixin):
     """
     Mixin used like a SingleObjectMixin to fetch an hub
     """

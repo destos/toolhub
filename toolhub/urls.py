@@ -24,7 +24,8 @@ urlpatterns = patterns(
     url(r'^lending/', include('lending.urls', namespace='lending')),
     url(r'^robots\.txt$', include('robots.urls')),
     url(r'^notifications/', get_nyt_pattern()),
-    url(r'^$', Homepage.as_view(), name='home')
+    url(r'^$', Homepage.as_view(), name='home'),
+    url(r'^', include('waffle.urls')),
 )
 
 if settings.DEBUG:
