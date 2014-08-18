@@ -30,6 +30,7 @@
              Modernizr enables HTML5 elements & feature detects for optimal performance.
              Create your own custom Modernizr build: www.modernizr.com/download/ -->
     <script src="{{ static('js/libs/modernizr-2.6.2-respond-1.1.0.min.js') }}"></script>
+    <script>{{ waffle.wafflejs() }}</script>
 </head>
 <body class="{% block body_class %}{% endblock %}" {% block body_attributes %}{% block body_app %} ng-app="toolhubApp"{% endblock %}{% endblock %}>
 {% block body %}
