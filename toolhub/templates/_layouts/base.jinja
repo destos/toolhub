@@ -126,14 +126,14 @@
     <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
     {% block cdn_js %}
 
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular{% if not debug %}.min{% endif %}.js"></script>
-    <script>window.angular || document.write('<script src="{{ STATIC_URL }}bower/angular/angular{% if not debug %}.min{% endif %}.js"><\/script>')</script>
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular{% if not debug %}.min{% endif %}.js"></script> -->
+    <!-- <script>window.angular || document.write('<script src="{{ STATIC_URL }}bower/angular/angular{% if not debug %}.min{% endif %}.js"><\/script>')</script> -->
     {# TODO: use UI bootstrap for angular UI elements: http://angular-ui.github.io/bootstrap/ #}
     {% endblock cdn_js %}
 
     {% block js %}
-    <script src="{{ static('bower/angular-bootstrap/ui-bootstrap-tpls.js') }}"></script>
-    <script src="{{ static('js/main.js') }}"></script>
+    <!-- <script src="{{ static('bower/angular-bootstrap/ui-bootstrap-tpls.js') }}"></script> -->
+    <script src="{{ static('js/main.min.js') }}"></script>
     {% endblock js %}
 
 {% include "ga_analytics.jinja" %}

@@ -1,7 +1,3 @@
-angular.module('toolhubApp', ['ui.bootstrap'])
+angular.module('toolhubApp', ['ui.bootstrap', 'toolhubApp.messages'])
 // .run(['$rootscope'], function($rootScope){
 // });
-
-.controller('MessagesCtrl', function($scope){
-    $scope.messages = []
-})
