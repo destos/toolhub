@@ -64,15 +64,9 @@ INSTALLED_APPS = (
     'django_jinja',
     'djcelery',
     'mptt',
-    'mptt_urls',
-    'class_based_auth_views',
-    'password_reset',
     'crispy_forms',
     'braces',
     'robots',
-
-    # Database migrations
-    'south',
 
     # local applications
     'accounts',

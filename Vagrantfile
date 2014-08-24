@@ -1,15 +1,40 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+# -*- mode: ruby; -*-
+require 'etc'
 
 Vagrant.configure("2") do |config|
-    config.vm.box = "precise64"
-    config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  config.vm.define :web do |web|
+    # Ubuntu 12.04
+    web.vm.box = "precise64"
+    web.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-    config.vm.network :forwarded_port, guest: 8000, host: 8000
+    # Network
+    web.vm.hostname = "vagrant.toolhub.co"
+    web.vm.network :forwarded_port, guest: 80, host: 8080, auto_correct: true
 
-    # # Add to /etc/hosts: 33.33.33.24 dev.example.com
-    # config.vm.network :hostonly, "33.33.33.24"
+    # Share for masterless server
+    web.vm.synced_folder "salt/roots/", "/srv/"
 
-    # provision with simple shell script
-    config.vm.provision "shell", path: "install_requirements.sh"
+    web.vm.provision :salt do |salt|
+      # Configure the minion
+      salt.minion_config = "salt/minion.conf"
+
+      # Show the output of salt
+      salt.verbose = true
+
+      # Pre-distribute these keys on our local installation
+      salt.minion_key = "salt/keys/vagrant.toolhub.co.pem"
+      salt.minion_pub = "salt/keys/vagrant.toolhub.co.pub"
+
+      # Run the highstate on start
+      salt.run_highstate = true
+
+      # Install the latest version of SaltStack
+      salt.install_type = "daily"
+    end
+
+    # Customize the box
+    web.vm.provider :virtualbox do |v|
+      v.customize ["modifyvm", :id, "--memory", 512]
+    end
+  end
 end

@@ -27,3 +27,5 @@ staticfiles/*
 toolhub/static/bower*
 .anvil/
 .tox
+node_modules/
+public/media
