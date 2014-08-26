@@ -32,8 +32,6 @@ INSTALLED_APPS = (
     'django_extensions',
     'django_jinja',
     'mptt',
-    'class_based_auth_views',
-    'password_reset',
     'crispy_forms',
     'accounts',
     'base',

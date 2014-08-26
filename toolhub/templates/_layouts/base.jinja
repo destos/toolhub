@@ -6,10 +6,6 @@
 <head>
   <meta charset="utf-8">
 
-  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
-       More info: h5bp.com/i/378 -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
   <title>{% block page_title %}{{ _("ToolHub") }}{% endblock %}</title>
   <meta name="description" content="{% block meta_description %}{% endblock %}">
   <meta name="author" content="{% block meta_author %}{% endblock %}">
@@ -56,26 +52,26 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li><a href="{{url('tools:list')}}">Tools</a></li>
-          <li><a href="{{url('hubs:list')}}">Hubs</a></li>
+          <li><a href="{{url('tools:list')}}">{{ _("Tools") }}</a></li>
+          <li><a href="{{url('hubs:list')}}">{{ _("Hubs") }}</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated() %}
           <li class="dropdown">
             <a href="#" class="dropdown-toggle">{{ user.username }} <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="{{ url('account:settings') }}">Account Settings</a></li>
-              <li><a href="{{ url('account:tool:manager') }}">Manage Tools</a></li>
-              <li><a href="{{ url('account:tool:lending') }}">Lending Status</a></li>
+              <li><a href="{{ url('account:settings') }}">{{ _("Account Settings") }}</a></li>
+              <li><a href="{{ url('account:tool:manager') }}">{{ _("Manage Tools") }}</a></li>
+              <li><a href="{{ url('account:tool:lending') }}">{{ _("Lending Status") }}</a></li>
               <li class="divider"></li>
-              <li><a href="{{ url('hubs:user_hub_list') }}">Your Hubs</a></li>
+              <li><a href="{{ url('hubs:user_hub_list') }}">{{ _("Your Hubs") }}</a></li>
               <li class="divider"></li>
-              <li><a href="{{ url('account:logout') }}">Logout</a></li>
+              <li><a href="{{ url('account:logout') }}">{{ _("Logout") }}</a></li>
             </ul>
           </li>
           {% else %}
-          <li><a href="{{ url('account:login') }}">Login</a></li>
-          <li><a href="{{ url('account:signup') }}">Sign up</a></li>
+          <li><a href="{{ url('account:login') }}">{{ _("Login") }}</a></li>
+          <li><a href="{{ url('account:signup') }}">{{ _("Sign up") }}</a></li>
           {% endif %}
         </ul>
       </div><!--/.navbar-collapse -->

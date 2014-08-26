@@ -1,28 +1,9 @@
-# This file pulls in everything a developer needs. If it's a basic package
-# needed to run the site, it belongs in requirements/production.txt. If it's a
-# package for developers (testing, docs, etc.), it goes in this file.
--r production.txt
+# if you want to run the app locally uncomment
+# -r development.txt
 
-# Deployment
-# Fabric
+# Local requirements for fabric file
+fabric
+fabtools
 
 # Documentation
 Sphinx
-
-# Testing
-mox
-nose
-django-nose
-model_mommy
-coverage
-pep8
-pylint
-fabric
-tox
-
-# if you have issues on mavericks installing pycrypto use:
-# ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future pip install pycrypto
-
-ipython
-ipdb
-Werkzeug==0.9.4
