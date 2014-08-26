@@ -1,11 +1,15 @@
+""" Settings for toolhub.co """
+
+# flake8: noqa
+
 import os
 
-from . import base
+from .base import *
 
 
 ## Email settings
-SERVER_EMAIL = "tooly@toolhub.com"
-DEFAULT_FROM_EMAIL = "tooly@toolhub.com"
+SERVER_EMAIL = "tooly@toolhub.co"
+DEFAULT_FROM_EMAIL = "tooly@toolhub.co"
 SYSTEM_EMAIL_PREFIX = "[toolhub]"
 
 EMAIL_HOST = "smtp.sendgrid.net"
@@ -17,7 +21,7 @@ EMAIL_USE_TLS = False
 ## Security
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-MIDDLEWARE_CLASSES = base.MIDDLEWARE_CLASSES + [
+MIDDLEWARE_CLASSES += [
     "sslify.middleware.SSLifyMiddleware"
 ]
 

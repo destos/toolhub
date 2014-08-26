@@ -7,8 +7,7 @@ include:
     - system_site_packages: False
     - distribute: True
     - runas: {{ pillar['django']['user'] }}
-    # TODO make this act on pillar to install other environment requirements
-    - requirements: {{ pillar['django']['path'] }}/requirements/local.txt
+    - requirements: {{ pillar['django']['path'] }}/requirements/{{ pillar['django']['requirements'] }}.txt
     - no_chown: True
     - require:
       - pkg: python-virtualenv

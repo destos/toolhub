@@ -26,7 +26,7 @@ extract-wheel:
 toolhub-wheel:
   cmd.wait:
     # TODO: change pip install requirements here to use environment specific requirements
-    - name: {{ pillar['django']['virtualenv'] }}/bin/pip install --use-wheel --no-index --find-links={{ pillar['wheel']['path'] }}/toolhub -r {{ pillar['django']['path'] }}/requirements.txt
+    - name: {{ pillar['django']['virtualenv'] }}/bin/pip install --use-wheel --no-index --find-links={{ pillar['wheel']['path'] }}/toolhub -r {{ pillar['django']['path'] }}/requirements/{{ pillar['django']['requirements'] }}.txt
     - require:
       - cmd: pip-wheel
       - virtualenv: {{ pillar['django']['virtualenv'] }}

@@ -1,5 +1,5 @@
 postgresql:
   db: toolhub_db
   user: toolhub_user
-  password: toolhub_password
+  password: CWMFgG89RBnPGbWUPogFrMk
   createdb: True

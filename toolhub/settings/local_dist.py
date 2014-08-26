@@ -1,15 +1,16 @@
+# flake8: noqa
 """
 This is an example settings/local.py file.
 These settings overrides what's in settings/base.py
 """
 
-from . import base
-
+from .base import *
 
 # To extend any settings from settings/base.py here's an example.
-# If you don't need to extend any settings from base.py, you do not need
-# to import base above
-INSTALLED_APPS = base.INSTALLED_APPS + ('django_nose',)
+INSTALLED_APPS += (
+    'django_nose',
+    'debug_toolbar',
+)
 
 DATABASES = {
     'default': {

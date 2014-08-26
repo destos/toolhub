@@ -20,13 +20,8 @@ def get_env_setting(setting):
         error_msg = "Set the %s env variable" % setting
         raise ImproperlyConfigured(error_msg)
 
-## django-heroku details
-# The name of the app on the Heroku platform.
-HEROKU_APP_NAME = 'toolhub'
-# The optional explicit buildpack URL.
-# HEROKU_BUILDPACK_URL = "https://github.com/destos/toolhub.git"
 # The canonical site domain.
-SITE_DOMAIN = 'toolhub.herokuapp.com'
+SITE_DOMAIN = 'toolhub.co'
 PREPEND_WWW = False
 
 SITE_ID = 1  # toolhub.co
@@ -248,11 +243,6 @@ FILE_UPLOAD_PERMISSIONS = 0o0664
 WSGI_APPLICATION = 'toolhub.wsgi.application'
 
 # Define your database connections
-# Parse database configuration from $DATABASE_URL
-# import dj_database_url
-# DATABASES = {
-#     'default': dj_database_url.config(default='postgres://localhost')
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
