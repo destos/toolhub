@@ -13,6 +13,20 @@ Describe your project here.
 * Install vagrant
 * $ vagrant up
 
+## Uses ##
+
+django-nyt
+django-reversion
+django-waffle
+django-robots
+django-braces
+django-sslify
+django-taggit
+django-extensions
+django-crispy-forms
+django-celery
+django-mptt
+
 License
 -------
 This software is licensed under the [New BSD License][BSD]. For more

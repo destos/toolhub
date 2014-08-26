@@ -29,3 +29,4 @@ toolhub/static/bower*
 .tox
 node_modules/
 public/media
+toolhub/static/js/main.min.js

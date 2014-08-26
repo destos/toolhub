@@ -1,0 +1,13 @@
+{% extends "_layouts/base.jinja" %}
+
+{% block page_title %}{{ super() }} - {{ _('Forbidden') }}{% endblock %}
+
+{% block header %}
+    <h1 class="page-header">403 <small>Forbidden</small></h1>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+    <p>Sorry, but your request was forbidden by the server.</p>
+</div>
+{% endblock %}

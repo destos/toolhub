@@ -1,6 +1,9 @@
-from django.core.urlresolvers import reverse_lazy
-from braces.views import LoginRequiredMixin as BracesLoginRequiredMixin
 from braces.views import *
+from braces.views import LoginRequiredMixin as BracesLoginRequiredMixin
+from braces.views._access import AccessMixin
+from django.core.exceptions import PermissionDenied
+from django.core.urlresolvers import reverse_lazy
+import waffle
 
 
 # abstract the object retrieval?
@@ -21,6 +24,42 @@ class MPTTUrlMixin(object):
 class LoginRequiredMixin(BracesLoginRequiredMixin):
     login_url = reverse_lazy("account:login")
     redirect_field_name = "return"
+
+
+class WaffleRequired(AccessMixin):
+    raise_exception = True
+
+    waffle_flags = []
+    waffle_switches = []
+    waffle_samples = []
+
+    def perform_redirect(self, request):
+        return redirect_to_login(request.get_full_path(),
+                                 self.get_login_url(),
+                                 self.get_redirect_field_name())
+
+    def dispatch(self, request, *args, **kwargs):
+        for flag in self.waffle_flags:
+            if not waffle.flag_is_active(request, flag):
+                if self.raise_exception:
+                    raise PermissionDenied
+                else:
+                    return self.perform_redirect(request)
+        for switch in self.waffle_switches:
+            if not waffle.switch_is_active(switch):
+                if self.raise_exception:
+                    raise PermissionDenied
+                else:
+                    return self.perform_redirect(request)
+        for sample in self.waffle_samples:
+            if not waffle.sample_is_active(sample):
+                if self.raise_exception:
+                    raise PermissionDenied
+                else:
+                    return self.perform_redirect(request)
+
+        return super(WaffleRequired, self).dispatch(
+            request, *args, **kwargs)
 
 
 class RestrictToUserMixin(LoginRequiredMixin):

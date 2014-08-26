@@ -9,8 +9,8 @@ from django.views.generic import (ListView, DetailView, UpdateView, CreateView,
 
 from .models import Hub
 from .mixins import (
-    HubMixin, HubUserMixin, MembershipRequiredMixin, AdminRequiredMixin,
-    OwnerRequiredMixin)
+    HubAccessMixin, HubMixin, HubUserMixin, MembershipRequiredMixin,
+    AdminRequiredMixin, OwnerRequiredMixin)
 from .forms import (
     HubForm, HubUserForm, HubUserAddForm, HubAddForm, SignUpForm)
 from .utils import create_hub
@@ -21,7 +21,7 @@ from tools.views import BaseToolList
 from tools.models import Tool
 
 
-class BaseHubList(ListView):
+class BaseHubList(HubAccessMixin, ListView):
     queryset = Hub.public.all()
     context_object_name = "hubs"
     template_name = 'hubs/hub_list.jinja'
@@ -37,7 +37,7 @@ class BaseHubDetail(HubMixin, DetailView):
         return context
 
 
-class BaseHubCreate(CreateView):
+class BaseHubCreate(HubAccessMixin, CreateView):
     model = Hub
     form_class = HubAddForm
     template_name = 'hubs/hub_form.jinja'
@@ -162,7 +162,7 @@ class BaseHubToolList(
         return qs.tools_from_users(self.hub.users.all())
 
 
-class HubSignup(FormView):
+class HubSignup(HubAccessMixin, FormView):
     """
     View that allows unregistered users to create an hub account.
 

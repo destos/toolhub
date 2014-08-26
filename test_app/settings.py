@@ -28,7 +28,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_nose',
     'south',
-    'compressor',
     'django_extensions',
     'django_jinja',
     'mptt',

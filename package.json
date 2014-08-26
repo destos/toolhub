@@ -1,0 +1,15 @@
+{
+  "name": "toolhub-frontend-build",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "postinstall": "bower install",
+    "prestart": "npm install"
+  },
+  "dependencies": {
+    "bower": "^1.3.1",
+    "angular-webpack-plugin": "0.0.2",
+    "exports-loader": "^0.6.2",
+    "webpack": "^1.3.3-beta2"
+  }
+}
