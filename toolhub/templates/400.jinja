@@ -1,0 +1,13 @@
+{% extends "_layouts/base.jinja" %}
+
+{% block page_title %}{{ super() }} - {{ _('Bad request') }}{% endblock %}
+
+{% block header %}
+    <h1 class="page-header">400 <small>{{ _('Bad request') }}</small></h1>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+    <p>The request could not be fulfilled due to the incorrect syntax of the request.</p>
+</div>
+{% endblock %}

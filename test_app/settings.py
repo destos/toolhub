@@ -29,7 +29,7 @@ INSTALLED_APPS = (
     'django_nose',
     'south',
     'django_extensions',
-    'django_jinja',
+    'jingo',
     'mptt',
     'crispy_forms',
     'accounts',

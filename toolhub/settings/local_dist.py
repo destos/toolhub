@@ -2,6 +2,7 @@
 """
 This is an example settings/local.py file.
 These settings overrides what's in settings/base.py
+Copy this file to local.py and make your adjustments
 """
 
 from .base import *
@@ -90,3 +91,10 @@ LOGGING = {
 INTERNAL_IPS = ('127.0.0.1')
 
 SOUTH_TESTS_MIGRATE = False
+
+
+# Enable waffle flags, samples and switches by defaut
+# can be overwritten by db flags!
+WAFFLE_FLAG_DEFAULT = True
+WAFFLE_SWITCH_DEFAULT = True
+WAFFLE_SAMPLE_DEFAULT = True

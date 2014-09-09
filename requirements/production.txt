@@ -2,11 +2,10 @@
 -r compiled.txt
 
 # Django stuff
-#Django==1.6.2
-git+git://github.com/django/django.git@1.7c2#egg=Django
+Django==1.7
 
 # Templates
-django-jinja==1.0.3
+jingo==0.7
 
 # Security
 bleach

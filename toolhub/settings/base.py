@@ -183,20 +183,22 @@ TEMPLATE_DIRS = (
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django_jinja.loaders.AppLoader',
-    'django_jinja.loaders.FileSystemLoader',
+    'jingo.Loader',
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
 
-# django_jinja
-DEFAULT_JINJA2_TEMPLATE_EXTENSION = '.jinja'
-JINJA2_AUTOESCAPE = True
-JINJA2_EXTENSIONS = [
-    'jinja2.ext.i18n',
-]
-JINJA2_ENVIRONMENT_OPTIONS = {
-    'cache_size': 0,
+# jingo
+JINGO_INCLUDE_PATTERN = r'\.jinja'
+JINGO_EXCLUDE_APPS = (
+    'debug_toolbar',
+    'waffle',
+    'admin',
+    'registration',
+    'context_processors',
+)
+JINJA_CONFIG = {
+    'autoescape': True
 }
 
 
