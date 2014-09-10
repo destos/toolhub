@@ -8,11 +8,10 @@ class Homepage(TemplateView):
     template_name = "toolhub/home.jinja"
 
 
-# TemplateView
 class GenericView(View):
-    response_cls = http.HttpResponse
+    response_class = http.HttpResponse
     content_type = "text/html"
-    tmpl_name = None
+    template_name = None
 
     def get_context_data(self):
         return {"view": self}
@@ -20,8 +19,8 @@ class GenericView(View):
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()
         output = loader.render_to_string(
-            self.tmpl_name, context, context_instance=RequestContext(request))
-        return self.response_cls(output, content_type=self.content_type)
+            self.template_name, context, context_instance=RequestContext(request))
+        return self.response_class(output, content_type=self.content_type)
 
 
 class ErrorView(GenericView):
@@ -45,20 +44,20 @@ class ErrorView(GenericView):
 
 
 class PageNotFound(ErrorView):
-    tmpl_name = "404.jinja"
-    response_cls = http.HttpResponseNotFound
+    template_name = "404.jinja"
+    response_class = http.HttpResponseNotFound
 
 
 class PermissionDenied(ErrorView):
-    tmpl_name = "403.jinja"
-    response_cls = http.HttpResponseForbidden
+    template_name = "403.jinja"
+    response_class = http.HttpResponseForbidden
 
 
 class BadRequest(ErrorView):
-    tmpl_name = "400.jinja"
-    response_cls = http.HttpResponseBadRequest
+    template_name = "400.jinja"
+    response_class = http.HttpResponseBadRequest
 
 
 class ServerError(ErrorView):
-    tmpl_name = "500.jinja"
-    response_cls = http.HttpResponseServerError
+    template_name = "500.jinja"
+    response_class = http.HttpResponseServerError
